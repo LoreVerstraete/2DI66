@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Mar  2 13:52:56 2023
-
-@author: Paulina
-"""
 import numpy as np 
 
 class customer:
@@ -12,10 +6,10 @@ class customer:
     
     def arrivaltime(poissonrate, totalTime): 
         '''
-        Calculates all the times when the groups arrieves.
+        Calculates all the times when groups arrive.
         param poissonrate: at which the groups arrive 
         param totalTime: Time of the simulation given in seconds
-        return: an Array of arrival time of the groups
+        return: an Array of the arrival time of the groups
         '''
         TimesGroupArrives = []
         t = np.random.poisson(poissonrate)
@@ -29,7 +23,7 @@ class customer:
         ''' 
         Calculates the group size of the arriving group. 
         param meangroupsize: integer of the mean group size 
-        returns: the arival time of each person
+        returns: the arrival time of each person
         '''
         groupsize = np.random.geometric(1/meangroupsize)
         return groupsize
@@ -62,13 +56,13 @@ class customer:
         '''
         timeToGetFood = np.random.exponential(1/mean)
         return timeToGetFood
-        # exponentially distributed amount of time with mean of 80 seconds
-        # output how long it takes in between arrival and queue
+        # exponentially distributed amount of time with a mean of 80 seconds
+        # output how long it takes between arrival and queue
 
 
     def cardcash(percentagecash):
         '''
-        Decides if costomer payes with cash or card. 
+        Decides if the customer pays with cash or a card. 
         param: percentagecash: int between 0 and 1
         returns: cash (1) or card(2)
         '''
