@@ -31,7 +31,7 @@ class customer:
     
     def arrive(poissonrate, totalTime, meangroupsize):
         '''
-        Puts groupsize and arrival time in a 2D-Array
+        Puts groupsize and arrival time in a 2D-Array.
         param poissonrate: at which the groups arrive 
         param totalTime: Time of the simulation given in seconds
         param meangroupsize: integer of the mean group size 
@@ -74,5 +74,4 @@ class customer:
         # 40% cash
         # output cash or card
 
-    
 print(customer.arrive(4, 60,4))
