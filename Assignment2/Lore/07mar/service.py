@@ -1,5 +1,5 @@
 from customer import customer
-from numpy import argmin, random
+from numpy import argmin, random, zeros
 
 class service:
     # This class determines the service times, which are exponentially distributed
@@ -7,7 +7,8 @@ class service:
     # been observed that 40 % of customers pay cash.
     # 3 cashiers
   
-    def assign_to_queue(queue_info,lenqueue,customer_info): #init queue info = [[],[],[]]
+    def assign_to_queue(queue_info,customer_info): #init queue info = [[],[],[]]
+        lenqueue = zeros(len(queue_info))
         customer_info_sortqueue = sorted(customer_info.items(),key=lambda item: (item[1][2]))
         print(customer_info_sortqueue)
         for i in range(len(customer_info_sortqueue)):
@@ -19,14 +20,16 @@ class service:
             queue_info[queue].append(customer_info_sortqueue[i][0])
         return customer_info_sortqueue, queue_info
 
-    def service(meancash, meancard, fractioncash, queue, list_queued_customers,customer_info):
+    def service(meancash, meancard,customer_info):
         for i in range(len(customer_info)):
-            if customer_info[i]['cash']:
+            if customer_info[i][1][3] == "cash":
                 servicetime = random.exponential(meancash) #servicetime cash
-            else:
+            if customer_info[i][1][3] == "card":
                 servicetime = random.exponential(meancard) #servicetime card
-            customer_info[i]['servicetime'] = servicetime
-        
+            else:
+                print("card/cash not defined well")
+            customer_info[i][1].append(servicetime)
+        return customer_info
         
         # first calc if it is card or cash (random 40% cash)
         # service times are exponentially distributed with means 20 for cash
@@ -63,8 +66,10 @@ CustomerINFO= {0: [4,1,5, 'cash'], 1: [9, 6, 15, 'card'], 2: [12, 2, 14, 'card']
 # print(sorted_customer_info[1][0])
 
 
-customer_info_sortqueue, queue_info = service.assign_to_queue([[],[],[]],[0,0,0],CustomerINFO)
-print(customer_info_sortqueue, queue_info)
+# customer_info_sortqueue, queue_info = service.assign_to_queue([[],[],[]],[0,0,0],CustomerINFO)
+# print(customer_info_sortqueue)
+# customer_info = service.service(20, 10,customer_info_sortqueue)
+# print(customer_info)
 # print(sorted_customer_info[3])
 # print(customer.take_food(80, [1,2]))
 # print(service.assign_to_queue([3,0,1],customer_info))
