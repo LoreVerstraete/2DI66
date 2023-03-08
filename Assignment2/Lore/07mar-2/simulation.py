@@ -66,7 +66,6 @@ class simulation:
 
 customer_info_sortqueue = simulation.sim(20, 50, 5, 20, 0.4, 15, 20)
 
-
 # =============================================================================
 #     def results(self, meangroupsize, poissonratearrivals, meanfood,total_nr_queues,list_queued_customers_old):
 #         # Question 1
