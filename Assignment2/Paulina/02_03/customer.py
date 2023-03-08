@@ -54,7 +54,7 @@ class customer:
         param mean:  mean of the exponential distribution. 
         returns: time for each person to be in a queue
         '''
-        timeToGetFood = np.random.exponential(1/mean)
+        timeToGetFood = np.random.exponential(mean)
         return timeToGetFood
         # exponentially distributed amount of time with a mean of 80 seconds
         # output how long it takes between arrival and queue
@@ -75,4 +75,6 @@ class customer:
         # output cash or card
 
     
-print(customer.arrive(4, 60,4))
+print(customer.arrive(4, 60,4))##
+
+
