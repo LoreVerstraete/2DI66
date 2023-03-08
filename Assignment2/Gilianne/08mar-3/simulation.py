@@ -1,6 +1,6 @@
 from service import service
 from customer import customer
-from numpy import zeros, mean, random, std
+from numpy import zeros, mean, random, std, sqrt, var, linspace
 import time
 import matplotlib.pyplot as plt
 
@@ -32,13 +32,13 @@ class simulation:
         TimeFinished = [[] for i in range(amount_of_queues)]
         FinishedCustomers = zeros(amount_of_queues)
         
-        customer_info_sortqueue = sorted(CustomersCashCard.items(),key=lambda item: (item[1][2]))
+        customer_info_sortqueue = sorted(CustomersCashCard.items(),key=lambda item: (item[1][3]))
         
         listAll = []
         # print("Customers sorted by queueing time", customer_info_sortqueue)
         for i in range(len(customer_info_sortqueue)):
             # Set new time to time a customer arrives at the queues
-            TimeToQueue = customer_info_sortqueue[i][1][2]
+            TimeToQueue = customer_info_sortqueue[i][1][3]
             if TimeCurrent <= TimeToQueue:
                 TimeCurrent = TimeToQueue
             # print("1. TimeCurrent = ", TimeCurrent, "indiv_customer =" ,customer_info_sortqueue[i])
@@ -86,30 +86,31 @@ class simulation:
     
     
     def results(sim):
-        ArrTime = 0
-        TimeFood = 1
-        TimeQueue = 2
-        CashCard = 3
-        nrQueue = 4
-        WaitTime = 5
-        ServiceTime = 6
-        FinishTime = 7
+        GroupNr = 0
+        ArrTime = 1
+        TimeFood = 2
+        TimeQueue = 3
+        CashCard = 4
+        nrQueue = 5
+        WaitTime = 6
+        ServiceTime = 7
+        FinishTime = 8
         
         # Question 1
         # Sojourn time arbitrary customer (individual)
         i = random.randint(0,len(sim[1]))
-        print("arrival", sim[1][i][1][ArrTime])
-        print("departure", sim[1][i][1][FinishTime])
+        # print("arrival", sim[1][i][1][ArrTime])
+        # print("departure", sim[1][i][1][FinishTime])
         sojourn_time = sim[1][i][1][FinishTime] - sim[1][i][1][ArrTime]
-        print("customer", i,"sojourn time:", sojourn_time)
+        # print("customer", i,"sojourn time:", sojourn_time)
          
         sojourn_time_individual = []
         for i in range(len(sim[1])):
             sojourn_time_individual.append(sim[1][i][1][FinishTime] - sim[1][i][1][ArrTime])
         plt.hist(sojourn_time_individual, bins =15)
         plt.show()
-        print("mean sojourn time", mean(sojourn_time_individual))
-        print("std sojourn time", std(sojourn_time_individual))
+        # print("mean sojourn time", mean(sojourn_time_individual))
+        # print("std sojourn time", std(sojourn_time_individual))
         
         # Expected time spend waiting in queue
         queue_time_list = []
@@ -117,19 +118,93 @@ class simulation:
         # # index_end_queue = 5
         for i in range(len(sim[1])):
             queue_time_list.append(sim[1][i][1][WaitTime])
-        print("mean waiting time", mean(queue_time_list))
-        print("std waiting time", std(queue_time_list))
+        # print("mean waiting time", mean(queue_time_list))
+        # print("std waiting time", std(queue_time_list))
         
         # Expected number customers in the canteen
         
         
         # Question 2
         # sojourn time group
-        sojourn_time_group = []
-        for i in range(len(customer.Customers)):
-            sojourn_time_group.append(customer.Customers[i][-1] - customer.Customers[i][0])
-        print(mean(sojourn_time_group))
-        print(std(sojourn_time_group))
+        allGroups = []
+        # print(len(sim[1]))
+        for i in range(len(sim[1])):
+            Group = sim[1][i][1][GroupNr]
+            if Group not in allGroups:
+                allGroups.append(Group)
+        # print("allGroups", allGroups)
+        
+        dictGroups = {}
+
+        for i in allGroups:
+            ALLTIME = []
+            # print("i", i)
+            for g in range(len(sim[1])):
+                G = sim[1][g][1][GroupNr]
+                # print("g", G)
+                if G == i:
+                    ArrivalTime = sim[1][g][1][ArrTime]
+                    ALLTIME.append(sim[1][g][1][FinishTime])
+                    # print("ALLTIME", G, ALLTIME)
+                    maxTime = max(ALLTIME)
+                dictGroups[i] = (ArrivalTime, maxTime)
+        # print("dictGroups", dictGroups)
+        sojournGroup = []
+        for i in range(len(allGroups)):
+            # print("find finish and start")
+            sojournGroup.append(dictGroups[i+1][1] - dictGroups[i+1][0])
+            # sojournGroup.append(dictGroups[i][0])
+            # print(dictGroups[i+1])
+            # print(dictGroups[i+1][0])
+            # print(dictGroups[i+1][1])
+        # print("SojournGroup", sojournGroup)
+        print("Mean sojourn time per group", mean(sojournGroup))
+        print("Std sojourn time per group", std(sojournGroup))
+        
+        
+        # Question 3
+        # give distribution number customers present in canteen: average, std, histogram
+        #PeopleInCanteen = zeros(4000) # in size when the latetes customers leave 
+        PeopleInCanteen = []
+        print(sim[1][1], int(sim[1][i][0]), sim[1][i][0])
+        for j in range(int(sim[1][0][1][0]), int(sim[1][0][1][-1])): #change if stepsize is smaller than 1 seconde 
+                print(j) 
+        for i in range(len(sim[1])): 
+            for j in range(int(sim[1][i][1][0]), int(sim[1][i][1][-1])): #change if stepsize is smaller than 1 seconde 
+                PeopleInCanteen.append(j)
+        AveragePeopleInCanteen = mean(PeopleInCanteen)
+        StandardDeviationPeopleInCanteen = std(PeopleInCanteen)
+        
+        print("############################################################################")
+        print("                                 Question 3                                 ") 
+        print("############################################################################")
+        print("People in the Canteen, each minute: ", PeopleInCanteen)
+        print("Average of People in the Canteen, each minute:", AveragePeopleInCanteen)
+        print("Standard deviation people in canteen:", StandardDeviationPeopleInCanteen)
+        plt.hist(PeopleInCanteen, bins = 60)
+        plt.title("People in the Canteen for "+ r'$\lambda$ ='+ str(round(simulation.poissonratearrivals/60))+ " min")
+        plt.ylabel("People in the canteen")
+        plt.xlabel("Time people are in the canteen, given in Minutes")
+        x = linspace(0,60,6)
+        xlocation = linspace(0,3600,6)
+        plt.xticks(ticks = xlocation, labels = x)
+        plt.show()
+        
+        
+        # Question 4
+        # arbitrary customer 
+        lb1 = mean(sojourn_time_individual) - 1.96*sqrt(var(sojourn_time_individual)/len(sim[1]))
+        ub1 = mean(sojourn_time_individual) + 1.96*sqrt(var(sojourn_time_individual)/len(sim[1]))
+        print("Half-width arbitrary customer", 1.96*sqrt(var(sojourn_time_individual)/len(sim[1])))
+        print("Confidence interval arbitrary customer", lb1, ",", ub1)
+        
+        # arbitrary group
+        lb1 = mean(sojournGroup) - 1.96*sqrt(var(sojournGroup)/len(allGroups))
+        ub1 = mean(sojournGroup) + 1.96*sqrt(var(sojournGroup)/len(allGroups))
+        print("Half-width arbitrary customer", 1.96*sqrt(var(sojournGroup)/len(allGroups)))
+        print("Confidence interval arbitrary customer", lb1, ",", ub1)
+        
+        
         
         
         
