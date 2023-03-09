@@ -43,7 +43,7 @@ class customer:
         # output arrival times per person in an array      
 
 
-    def take_food(mean, Customers):
+    def takeFood(mean, Customers):
         '''
         Calculates how long it takes a person to get the food.
         param mean:  mean of the exponential distribution. 
