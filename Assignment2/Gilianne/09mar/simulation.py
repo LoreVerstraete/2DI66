@@ -138,7 +138,7 @@ class simulation:
         print("std waiting time", std(queue_time_list))
         
         # Expected number customers in the canteen
-        
+        # code in part question 3
         
         # Question 2
         # sojourn time group
@@ -178,31 +178,27 @@ class simulation:
         print("Std sojourn time per group", std(sojournGroup))
         
         
-        #Question 3
+        # Question 3
         # give distribution number customers present in canteen: average, std, histogram
-        PeopleInCanteen = []
-        #print(sim[1][1], int(sim[1][i][0]), sim[1][i][0])
-        #for j in range(int(sim[1][0][1][ArrTime]), int(sim[1][0][1][FinishTime])): #change if stepsize is smaller than 1 seconde 
-         #       print(j) 
+        PeopleInCanteenSeconds = zeros((int(sim[0]+1)))
         for i in range(len(sim[1])): 
+            j = 0
             for j in range(int(sim[1][i][1][ArrTime]), int(sim[1][i][1][FinishTime])): #change if stepsize is smaller than 1 seconde 
-                PeopleInCanteen.append(j)
-        AveragePeopleInCanteen = mean(PeopleInCanteen)
-        StandardDeviationPeopleInCanteen = std(PeopleInCanteen)
+                PeopleInCanteenSeconds[j] += 1
+
+        print("PeopleInCanteenSeconds", PeopleInCanteenSeconds)
+        AveragePeopleInCanteen = mean(PeopleInCanteenSeconds)
+        StandardDeviationPeopleInCanteen = std(PeopleInCanteenSeconds)
         
         print("############################################################################")
         print("                                 Question 3                                 ") 
         print("############################################################################")
-        #print("People in the Canteen, each minute: ", PeopleInCanteen)
-        print("Average of People in the Canteen, each minute:", AveragePeopleInCanteen)
+        print("Groups of people in the canteen each seconde:", AveragePeopleInCanteen )
         print("Standard deviation people in canteen:", StandardDeviationPeopleInCanteen)
-        plt.hist(PeopleInCanteen, bins = 60)
-        plt.title("People in the Canteen for "+ r'$\lambda$ ='+ str(simulation.poissonratearrivals)+ " per min")
-        plt.ylabel("People in the canteen")
-        plt.xlabel("Time people are in the canteen, given in Minutes")
-        x = linspace(0,60,6)
-        xlocation = linspace(0,3600,6)
-        plt.xticks(ticks = xlocation, labels = x)
+        plt.hist(PeopleInCanteenSeconds,bins=20)
+        plt.xlabel("Size of groups of people")
+        plt.ylabel("frequence")
+        plt.title("Distribution of people in the canteen")
         plt.show()
         
         

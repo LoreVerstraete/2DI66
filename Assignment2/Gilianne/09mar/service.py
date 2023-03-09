@@ -21,7 +21,11 @@ class service:
     
     # an individual is assigned to the shortest queue
     def assign_to_queue_indiv(queue_info,customer_info_indiv): #init queue info = [[],[],[]]
-        queue = argmin([len(queue_info[i]) for i in range(len(queue_info))])
+        # queue = argmin([len(queue_info[i]) for i in range(len(queue_info))])
+        MinQueues = [i for i in range(len(queue_info)) if queue_info[i] == min(queue_info)]
+        queue = random.choice(MinQueues)
+        
+        
         customer_info_indiv[1].append(queue)
         queue_info[queue].append(customer_info_indiv[0])
         return customer_info_indiv, queue_info
