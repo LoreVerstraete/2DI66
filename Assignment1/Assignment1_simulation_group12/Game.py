@@ -175,7 +175,7 @@ class Game:
                         extraQueen += 1
                     nrQueensold = nrQueensnew
                     # print("extraQueen", extraQueen)
-                    
+                   
                     # evaluate the state of the game
                     score = Game.evaluate(check_beforemove, NoMovesPossible, player)
                 
@@ -189,5 +189,5 @@ class Game:
         return score, nrMoves, extraQueen
     
 b = Board()
-# print(Game.playGame(b.board, b.boardpiece, b.boardcolor, b.columsMoves,Piece.STRATEGY_PAWN2))
+print(Game.playGame(b.board, b.boardpiece, b.boardcolor, b.columsMoves,Piece.STRATEGY_PAWN2))
 #print(Game.playGame(b.board, b.boardpiece, b.boardcolor, b.columsMoves,Piece.STRATEGY_RANDOM))
