@@ -17,18 +17,10 @@ class service:
     ServiceTime = 7
     FinishTime = 8
     
-    
-    
     # an individual is assigned to the shortest queue
-    def assign_to_queue_indiv(queue_info,customer_info_indiv): #init queue info = [[],[],[]]
-        '''
-        Assign to queue assigns people to queue
-        '''
-        # queue = argmin([len(queue_info[i]) for i in range(len(queue_info))])
+    def assign_to_queue_indiv(queue_info,customer_info_indiv):
         MinQueues = [i for i in range(len(queue_info)) if queue_info[i] == min(queue_info)]
         queue = random.choice(MinQueues)
-        
-        
         customer_info_indiv[1].append(queue)
         queue_info[queue].append(customer_info_indiv[0])
         return customer_info_indiv, queue_info
@@ -72,9 +64,3 @@ class service:
         alreadyfinishedjobs = amountfinishedjobs
         queue_info_queue = queue_info_queue[newlyfinishedjobs:]
         return amountfinishedjobs,queue_info_queue
-
-
-# CustomerINFO= {0: [4,1,5, 'cash'], 1: [9, 6, 15, 'card'], 2: [12, 2, 14, 'card']}
-# sorted_customer_info = sorted(CustomerINFO.items(),key=lambda item: (item[1][2]))
-# customer_info_indiv = sorted_customer_info[1]
-

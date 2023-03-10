@@ -215,7 +215,7 @@ class simulation:
         print("Half-width arbitrary customer", 1.96*sqrt(var(sojournGroup)/len(allGroups)))
         print("Confidence interval arbitrary customer", lb1, ",", ub1)
         
-        
+
         
         
         
