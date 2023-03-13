@@ -5,6 +5,7 @@ from numpy import zeros, mean, random, std, sqrt, var, linspace, array
 #from numpy.ndarray import flatten
 import time
 import matplotlib.pyplot as plt
+import numba as nb
 
 
 class results:
@@ -32,7 +33,7 @@ class results:
     serviceTime = 7
     finishTime = 8
     
-    
+    #@nb.jit()
     def results(nrRuns):
         startTime = time.time()
         
@@ -53,11 +54,15 @@ class results:
         
         Q3listAll = []
         
+        percentageExtension3 = [] 
+        
         for i in range(nrRuns):
-            print("nrRun", i)
+            # print("nrRun", i)
             # Run the simulation every time
             sim = simulation.sim(results.extension, results.poissonratearrivals, results.totalTime, results.meangroupsize, results.meanFood, results.cashpayments, results.meancash, results.meancard)
-    
+            
+            percentageExtension3.append(sim[2])
+            
             # Sojourn time arbitrary customer (individual)            
             sojournTimeIndividual = []                  # an empty list to store all times
             for i in range(len(sim[1])):
@@ -154,28 +159,64 @@ class results:
             
         print("Question 1 ")
         print("Sojourn time")
-        print("Mean sojourn time", mean(Q1MeanSojourn))
+        print("Mean of mean sojourn time", mean(Q1MeanSojourn))
+        # print("Stdv of mean sojourn time", std(Q1MeanSojourn))
+        lb1 = mean(Q1MeanSojourn) - 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
+        ub1 = mean(Q1MeanSojourn) + 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
+        print("Half-width mean sojourn time", 1.96*sqrt(var(Q1MeanSojourn)/nrRuns))
+        print("Confidence interval mean sojourn time", lb1, ",", ub1)
         print("Std sojourn time", mean(Q1StdSojourn))
         
         print("   ")
-        print("Waiting time")
+        print("Waiting time queue 0")
         print("Average waiting time queue 0 = ", mean(Q1MeanQueue0))
+        print("stdv of mean waiting time", std(Q1MeanQueue0))
+        lb1 = mean(Q1MeanQueue0) - 1.96*sqrt(var(Q1MeanQueue0)/nrRuns)
+        ub1 = mean(Q1MeanQueue0) + 1.96*sqrt(var(Q1MeanQueue0)/nrRuns)
+        print("Half-width average waiting time queue 0", 1.96*sqrt(var(Q1MeanQueue0)/nrRuns))
+        print("Confidence interval average waiting time queue 0", lb1, ",", ub1)
         print("stdv waiting time queue 0 = ", mean(Q1StdQueue0))
+
+        print("   ")
+        print("Waiting time queue 1")
         print("Average waiting time queue 1 = ", mean(Q1MeanQueue1))
+        print("std of mean waiting time queue 1 = ", std(Q1MeanQueue1))
+        lb1 = mean(Q1MeanQueue1) - 1.96*sqrt(var(Q1MeanQueue1)/nrRuns)
+        ub1 = mean(Q1MeanQueue1) + 1.96*sqrt(var(Q1MeanQueue1)/nrRuns)
+        print("Half-width average waiting time queue 1", 1.96*sqrt(var(Q1MeanQueue1)/nrRuns))
+        print("Confidence interval average waiting time queue 1", lb1, ",", ub1)
         print("stdv waiting time queue 1 = ", mean(Q1StdQueue1))
+        
+        print("   ")
+        print("Waiting time queue 2")
         print("Average waiting time queue 2 = ", mean(Q1MeanQueue2))
+        print("std mean waiting time queue 2 = ", std(Q1MeanQueue2))
+        lb1 = mean(Q1MeanQueue2) - 1.96*sqrt(var(Q1MeanQueue2)/nrRuns)
+        ub1 = mean(Q1MeanQueue2) + 1.96*sqrt(var(Q1MeanQueue2)/nrRuns)
+        print("Half-width average waiting time queue 2", 1.96*sqrt(var(Q1MeanQueue2)/nrRuns))
+        print("Confidence interval average waiting time queue 2", lb1, ",", ub1) 
         print("stdv waiting time queue 2 = ", mean(Q1StdQueue2))
+
         print("  ")
         print("Number customers")
         print("Mean custumers in the canteen each second:", mean(Q1MeanNrCustomer))
+        print("std mean custumers in the canteen each second:", std(Q1MeanNrCustomer))
+        lb1 = mean(Q1MeanNrCustomer) - 1.96*sqrt(var(Q1MeanNrCustomer)/nrRuns)
+        ub1 = mean(Q1MeanNrCustomer) + 1.96*sqrt(var(Q1MeanNrCustomer)/nrRuns)
+        print("Half-width mean custumers in the canteen each second", 1.96*sqrt(var(Q1MeanNrCustomer)/nrRuns))
+        print("Confidence interval mean custumers in the canteen each second", lb1, ",", ub1)
         print("Standard deviation customers in canteen:", mean(Q1StdNrCustomer))
-        print("  ")
         
+        print("  ")
         print("Question 2")
         print("Mean sojourn time per group", mean(Q2MeanSojournGroup))
+        print("Std mean sojourn time per group", std(Q2MeanSojournGroup))
+        lb1 = mean(Q2MeanSojournGroup) - 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns)
+        ub1 = mean(Q2MeanSojournGroup) + 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns)
+        print("Half-width mean sojourn time per group", 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns))
+        print("Confidence interval mean sojourn time per group", lb1, ",", ub1)
         print("Std sojourn time per group", mean(Q2StdSojournGroup))
         print(" ")
-        # Confidence intervals question 4
 
         
         # Question 3
@@ -184,6 +225,7 @@ class results:
         plt.hist(Q3listAllFlatten, bins= 40)
         plt.xlabel('Number of customers')
         plt.ylabel('Frequency')
+        #plt.xlim(0,250) # add to create histograms with the same x-axis
         plt.title('Number of customers in canteen per second')
         plt.show()
         Mean = mean(Q3listAllFlatten) 
@@ -193,28 +235,36 @@ class results:
         print("Standard deviation:", StandardDeviation)
         
         
-        # Question 4
-        print("Question 4")  
-        # Confidence interval individual customer
-        lb1 = mean(Q1MeanSojourn) - 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
-        ub1 = mean(Q1MeanSojourn) + 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
-        print("Half-width arbitrary customer", 1.96*sqrt(var(Q1MeanSojourn)/nrRuns))
-        print("Confidence interval arbitrary customer", lb1, ",", ub1)
-        # Confidence interval customer group
-        lb1 = mean(Q2MeanSojournGroup) - 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns)
-        ub1 = mean(Q2MeanSojournGroup) + 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns)
-        print("Half-width arbitrary group", 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns))
-        print("Confidence interval arbitrary group", lb1, ",", ub1) # I think this should be arbitrary group, so I changed the printed sentences customer -> group
+# =============================================================================
+#         # Question 4
+#         print("Question 4")  
+#         # Confidence interval individual customer
+#         lb1 = mean(Q1MeanSojourn) - 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
+#         ub1 = mean(Q1MeanSojourn) + 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
+#         print("Half-width arbitrary customer", 1.96*sqrt(var(Q1MeanSojourn)/nrRuns))
+#         print("Confidence interval arbitrary customer", lb1, ",", ub1)
+#         # Confidence interval customer group
+#         lb1 = mean(Q2MeanSojournGroup) - 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns)
+#         ub1 = mean(Q2MeanSojournGroup) + 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns)
+#         print("Half-width arbitrary group", 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns))
+#         print("Confidence interval arbitrary group", lb1, ",", ub1) # I think this should be arbitrary group, so I changed the printed sentences customer -> group
+# =============================================================================
+        
+        
+        #ModelExtension 2:
+        if results.extension ==2: 
+            print("Percentage of groups that are going to the food card: ",mean(percentageExtension3))
         
         totalTime = time.time() - startTime
         
+        print("Total time", totalTime)
         return "Total time", totalTime
     
        
 
 
 # results.Question2(10)
-print(results.results(1000))
+results.results(10000)
 
 
 

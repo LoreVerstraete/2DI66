@@ -13,12 +13,12 @@ class simulation:
     def sim(extension, poissonratearrivals, totalTime, meangroupsize, meanFood, cashpayments, meancash, meancard):
         # First the arrival times are determined
         customers = customer.arrive(poissonratearrivals, totalTime, meangroupsize)
-        # Output: for 1 customer (customernumber, [groupNr, arrivalTime])
+        # Output: for 1 customer (customernumber, [GroupNr, arrivalTime, timeToTakeFood, timeToQueue])
         
         # For extension 2 less groups arrive and thus a adjusted set of arrivals is used
+        actuallPercentage = 0 
         if extension == 2: 
-            customers = customer.groupReduceFifteenPercent(customers)
-        #print(customers)
+            customers, actuallPercentage = customer.groupReduceFifteenPercent(customers)
         # Adds to a customer the time it takes to take food
         customersGottenFood = customer.takeFood(meanFood, customers)
         # Output: for 1 customer (customernumber, [GroupNr, arrivalTime, timeToTakeFood, timeToQueue])
@@ -26,6 +26,7 @@ class simulation:
         # Adds to a customer if the person pays with cash or card
         customersCashCard = customer.cardcash(cashpayments, customersGottenFood)
         # Output: for 1 customer (customernumber, [GroupNr, arrivalTime, timeToTakeFood, timeToQueue, 'card' or 'cash'])
+        
         
         # Initialise
         timeCurrent = 0 #start at t=0
@@ -67,21 +68,20 @@ class simulation:
             # Calculate the time a customer is finished
             customerInfoIndiv, TimeFinished = service.finish(customerInfoIndiv, timeFinished)            
             # customerInfoIndiv output per customer: (customernumber, [GroupNr, arrivalTime, timeToTakeFood, timeToQueue, 'card' or 'cash', queue Nr, waitingTime, serviceTime, FinishedTime])
-
-            # Append all the information (customerInfoIndiv) of a individual customer to a list
+            
+            # Append all the information of a individual customer to a list
             listAll.append(customerInfoIndiv)
-            #Output: nr of customers * (customernumber, [GroupNr, arrivalTime, timeToTakeFood, timeToQueue, 'card' or 'cash', queue Nr, waitingTime, serviceTime, FinishedTime])
         
         # Define when the queues are empty
         timeEndEmptyQueue = [max(timeFinished[i]) for i in range(amountOfQueues)]
         timeEndEmptyQueues = max(timeEndEmptyQueue)
 
-        return timeEndEmptyQueues, listAll
+        return timeEndEmptyQueues, listAll, actuallPercentage
     
     
     
               
-#sim = simulation.sim(simulation.extension, simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, simulation.cashpayments, simulation.meancash, simulation.meancard)
+# sim = simulation.sim(simulation.extension, simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, simulation.cashpayments, simulation.meancash, simulation.meancard)
 # # sim = simulation.sim(simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, 0, simulation.meancash, simulation.meancard)
 # all_results = simulation.results(sim) 
 # # question3 = simulation.question3(50)    
