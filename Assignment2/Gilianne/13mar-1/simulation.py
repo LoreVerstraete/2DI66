@@ -76,4 +76,4 @@ class simulation:
 # sim = simulation.sim(simulation.extension, simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, simulation.cashpayments, simulation.meancash, simulation.meancard)
 # # sim = simulation.sim(simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, 0, simulation.meancash, simulation.meancard)
 # all_results = simulation.results(sim) 
-# # question3 = simulation.question3(50)  
+# # question3 = simulation.question3(50)    

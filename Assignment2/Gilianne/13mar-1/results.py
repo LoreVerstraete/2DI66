@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 
 class results:
     
-    extension = 0
+    # input values
+    extension = 1
     poissonratearrivals = 1
     meangroupsize = 3
     meanFood = 80 #seconds
@@ -35,6 +36,7 @@ class results:
     def results(nrRuns):
         startTime = time.time()
         
+        # Lists for all questions to store the mean and standard deviation per run
         Q1MeanSojourn = []
         Q1StdSojourn = []
         Q1MeanQueue0 = []
@@ -49,89 +51,96 @@ class results:
         Q2MeanSojournGroup = []
         Q2StdSojournGroup = []
         
-        
         Q3listAll = []
         
         for i in range(nrRuns):
             print("nrRun", i)
+            # Run the simulation every time
             sim = simulation.sim(results.extension, results.poissonratearrivals, results.totalTime, results.meangroupsize, results.meanFood, results.cashpayments, results.meancash, results.meancard)
     
             # Sojourn time arbitrary customer (individual)            
-            sojournTimeIndividual = []
+            sojournTimeIndividual = []                  # an empty list to store all times
             for i in range(len(sim[1])):
+                # compute for every customer the sojourn time
                 sojournTimeIndividual.append(sim[1][i][1][results.finishTime] - sim[1][i][1][results.arrTime])
-            meanQ1Sojourn = mean(sojournTimeIndividual)
-            stdvQ1Sojourn = std(sojournTimeIndividual)
-            Q1MeanSojourn.append(meanQ1Sojourn)
-            Q1StdSojourn.append(stdvQ1Sojourn)
+            meanQ1Sojourn = mean(sojournTimeIndividual) # compute mean sojourn time
+            stdvQ1Sojourn = std(sojournTimeIndividual)  # compute std sojourn time
+            Q1MeanSojourn.append(meanQ1Sojourn)         # add mean time to list of means
+            Q1StdSojourn.append(stdvQ1Sojourn)          # add stdv to lsit of standard deviations
             
 
             # Expected time spend waiting in queue
-            queueTimeList0 = []
-            queueTimeList1 = []
-            queueTimeList2 = []
+            queueTimeList0 = []                         # an empty list to store all times
+            queueTimeList1 = []                         # an empty list to store all times
+            queueTimeList2 = []                         # an empty list to store all times
             for i in range(len(sim[1])):
+                # Per queue add the waiting time to the list
                 if sim[1][i][1][results.nrQueue] == 0:
                     queueTimeList0.append(sim[1][i][1][results.waitTime])
                 if sim[1][i][1][results.nrQueue] == 1:
                     queueTimeList1.append(sim[1][i][1][results.waitTime])
                 if sim[1][i][1][results.nrQueue] == 2:
                     queueTimeList2.append(sim[1][i][1][results.waitTime])
-            meanQ1Waiting0 = mean(queueTimeList0)
-            stdQ1Waiting0 = std(queueTimeList0)
+            meanQ1Waiting0 = mean(queueTimeList0)       # compute mean waiting time queue 0
+            stdQ1Waiting0 = std(queueTimeList0)         # compute stdv waiting time queue 0
             # print(meanQ1Waiting0)
-            Q1MeanQueue0.append(meanQ1Waiting0)
-            Q1StdQueue0.append(stdQ1Waiting0)
+            Q1MeanQueue0.append(meanQ1Waiting0)         # append the mean to the list of means of queue 0
+            Q1StdQueue0.append(stdQ1Waiting0)           # append stdv to the list of stdv of queue 0
             
-            meanQ1Waiting1 = mean(queueTimeList1)
-            stdQ1Waiting1 = std(queueTimeList1)
-            Q1MeanQueue1.append(meanQ1Waiting1)
-            Q1StdQueue1.append(stdQ1Waiting1)
+            meanQ1Waiting1 = mean(queueTimeList1)       # compute mean waiting time queue 1
+            stdQ1Waiting1 = std(queueTimeList1)         # compute stdv waiting time queue 1
+            Q1MeanQueue1.append(meanQ1Waiting1)         # append the mean to the list of means of queue 1
+            Q1StdQueue1.append(stdQ1Waiting1)           # append stdv to the list of stdv of queue 1
             
-            meanQ1Waiting2 = mean(queueTimeList2)
-            stdQ1Waiting2 = std(queueTimeList2)
-            Q1MeanQueue2.append(meanQ1Waiting2)
-            Q1StdQueue2.append(stdQ1Waiting2)
+            meanQ1Waiting2 = mean(queueTimeList2)       # compute mean waiting time queue 2
+            stdQ1Waiting2 = std(queueTimeList2)         # compute stdv waiting time queue 2
+            Q1MeanQueue2.append(meanQ1Waiting2)         # append the mean to the list of means of queue 2
+            Q1StdQueue2.append(stdQ1Waiting2)           # append the stdv the list of stdv of queue 2
             
-            # Expected number customers in the canteen        
+            # Expected number customers in the canteen  
+            # Create list of zeros for all seconds per run
             CustomersInCanteenSeconds = [0 for i in range(int(results.totalTime))] 
             for i in range(len(sim[1])): 
                 j = 0
                 for j in range(int(sim[1][i][1][results.arrTime]), int(sim[1][i][1][results.finishTime])): #change if stepsize is smaller than 1 seconde 
                     if 0<j <results.totalTime:
                         CustomersInCanteenSeconds[j] += 1
-            AverageCustomersInCanteen = mean(CustomersInCanteenSeconds)
-            StandardDeviationCustomersInCanteen = std(CustomersInCanteenSeconds)
-            Q1MeanNrCustomer.append(AverageCustomersInCanteen)
-            Q1StdNrCustomer.append(StandardDeviationCustomersInCanteen)
+                    
+            AverageCustomersInCanteen = mean(CustomersInCanteenSeconds)          # compute mean number customers
+            StandardDeviationCustomersInCanteen = std(CustomersInCanteenSeconds) # compute stdv number customers
+            Q1MeanNrCustomer.append(AverageCustomersInCanteen)                   # append mean to list of means nr customers
+            Q1StdNrCustomer.append(StandardDeviationCustomersInCanteen)          # append stdv to list of stdv nr customers
             
             
             #question 2
-            allGroups = []
+            allGroups = []                                  # create an empty list to store all groups
+            # look for each group number and append it to the list if it is not already in it
             for i in range(len(sim[1])):
                 Group = sim[1][i][1][results.groupNr]
                 if Group not in allGroups:
                     allGroups.append(Group)
-            dictGroups = {}
-
+            
+            dictGroups = {} # create a dictionary with key=groupsnr and value=sojourntime of a group
             for i in allGroups:
                 ALLTIME = []
                 for g in range(len(sim[1])):
                     G = sim[1][g][1][results.groupNr]
                     if G == i:
-                        arrivalTime = sim[1][g][1][results.arrTime]
-                        ALLTIME.append(sim[1][g][1][results.finishTime])
-                        maxTime = max(ALLTIME)
-                    dictGroups[i] = (arrivalTime, maxTime)
-            sojournGroup = []
+                        arrivalTime = sim[1][g][1][results.arrTime]         # the arrival time is the same for all customers within a group
+                        ALLTIME.append(sim[1][g][1][results.finishTime])    # append finish times for all customers within that group
+                        maxTime = max(ALLTIME)                              # determine the latest finishing time
+                    dictGroups[i] = (arrivalTime, maxTime)                  # add to the dictionary the arrival time and latest finishing time
+            sojournGroup = []  # create an empty list to store the sojourn times per group
             dictGroups = list(map(list, dictGroups.items()))
             for i in range(len(allGroups)):
+                # for all groups compute the sojourn time and append to the list of sojourn times
                 sojournGroup.append(dictGroups[i][1][1] - dictGroups[i][1][0])
                 
-            Q2MeanSojournGroup.append(mean(sojournGroup))
-            Q2StdSojournGroup.append(std(sojournGroup))
+            Q2MeanSojournGroup.append(mean(sojournGroup))       # compute mean sojourn time and append to list of mean sojourn times per run
+            Q2StdSojournGroup.append(std(sojournGroup))         # compute stdv sojourn time and append to list of stdv sojourn times per run
             
             # Question 3
+            # make one list with number of customers in the canteen of all runs
             customersInCanteenSeconds = [0 for i in range(int(results.totalTime))] 
             for i in range(len(sim[1])): 
                 for j in range(int(sim[1][i][1][results.arrTime]), int(sim[1][i][1][results.finishTime])): #change if stepsize is smaller than 1 seconde 
@@ -140,10 +149,8 @@ class results:
             Q3listAll.append(customersInCanteenSeconds) 
             
             
-            
-            
-        print("extension", results.extension)
-        print("poisson rate", results.poissonratearrivals) 
+           
+        print("extension", results.extension, "poisson rate", results.poissonratearrivals)
             
         print("Question 1 ")
         print("Sojourn time")
@@ -175,6 +182,9 @@ class results:
         Q3listAllarray = array(Q3listAll)
         Q3listAllFlatten = Q3listAllarray.flatten()
         plt.hist(Q3listAllFlatten, bins= 40)
+        plt.xlabel('Number of customers')
+        plt.ylabel('Frequency')
+        plt.title('Number of customers in canteen per second')
         plt.show()
         Mean = mean(Q3listAllFlatten) 
         StandardDeviation = std(Q3listAllFlatten)
@@ -204,4 +214,7 @@ class results:
 
 
 # results.Question2(10)
-print(results.results(100000))
+print(results.results(10000))
+
+
+

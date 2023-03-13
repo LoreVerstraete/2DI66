@@ -1,3 +1,5 @@
+### Results per question
+
 from customer import customer
 from service import service
 from simulation import simulation
@@ -10,11 +12,11 @@ import matplotlib.pyplot as plt
 class results:
     
     extension = 0
-    poissonratearrivals = 1
+    poissonratearrivals = 4
     meangroupsize = 3
     meanFood = 80 #seconds
     totalNrQueues = 3
-    # listQueuedCustomersOld = zeros(totalNrQueues) # not used anymore
+    # listQueuedCustomersOld = zeros(totalNrQueues)
     totalTime = 3600 # in seconds 
     cashpayments = 0.4    # 0.4 for basic, 0 for extension 3
     meancard = 12
@@ -32,8 +34,7 @@ class results:
     finishTime = 8
     
     
-    def results(nrRuns):
-        startTime = time.time()
+    def Question1(nrRuns):
         
         Q1MeanSojourn = []
         Q1StdSojourn = []
@@ -46,14 +47,7 @@ class results:
         Q1MeanNrCustomer = []
         Q1StdNrCustomer = []
         
-        Q2MeanSojournGroup = []
-        Q2StdSojournGroup = []
-        
-        
-        Q3listAll = []
-        
         for i in range(nrRuns):
-            print("nrRun", i)
             sim = simulation.sim(results.extension, results.poissonratearrivals, results.totalTime, results.meangroupsize, results.meanFood, results.cashpayments, results.meancash, results.meancard)
     
             # Sojourn time arbitrary customer (individual)            
@@ -104,9 +98,43 @@ class results:
             StandardDeviationCustomersInCanteen = std(CustomersInCanteenSeconds)
             Q1MeanNrCustomer.append(AverageCustomersInCanteen)
             Q1StdNrCustomer.append(StandardDeviationCustomersInCanteen)
+
+        print("Question 1 ")
+        print("Sojourn time")
+        print("Mean sojourn time", mean(Q1MeanSojourn))
+        print("Std sojourn time", std(Q1StdSojourn))
+        
+        # lower and upper bound for confidence interval question 4
+        lb1 = mean(Q1MeanSojourn) - 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
+        ub1 = mean(Q1MeanSojourn) + 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
+        print("Confidence interval (Question 4)")  
+        print("Half-width arbitrary customer", 1.96*sqrt(var(Q1MeanSojourn)/nrRuns))
+        print("Confidence interval arbitrary customer", lb1, ",", ub1)
+        
+        
+        print("   ")
+        print("Waiting time")
+        print("Average waiting time queue 0 = ", mean(Q1MeanQueue0))
+        print("stdv waiting time queue 0 = ", std(Q1StdQueue0))
+        print("Average waiting time queue 1 = ", mean(Q1MeanQueue1))
+        print("stdv waiting time queue 1 = ", std(Q1StdQueue1))
+        print("Average waiting time queue 2 = ", mean(Q1MeanQueue2))
+        print("stdv waiting time queue 2 = ", std(Q1StdQueue2))
+        print("  ")
+        print("Number customers")
+        print("Mean custumers in the canteen each second:", mean(Q1MeanNrCustomer))
+        print("Standard deviation customers in canteen:", std(Q1StdNrCustomer))
+        return "Question 1 finished"
+    
+    
+    def Question2(nrRuns): 
+       
+        Q2MeanSojournGroup = []
+        Q2StdSojournGroup = []
+        
+        for i in range(nrRuns):
+            sim = simulation.sim(results.extension, results.poissonratearrivals, results.totalTime, results.meangroupsize, results.meanFood, results.cashpayments, results.meancash, results.meancard)
             
-            
-            #question 2
             allGroups = []
             for i in range(len(sim[1])):
                 Group = sim[1][i][1][results.groupNr]
@@ -131,77 +159,46 @@ class results:
             Q2MeanSojournGroup.append(mean(sojournGroup))
             Q2StdSojournGroup.append(std(sojournGroup))
             
-            # Question 3
-            customersInCanteenSeconds = [0 for i in range(int(results.totalTime))] 
-            for i in range(len(sim[1])): 
-                for j in range(int(sim[1][i][1][results.arrTime]), int(sim[1][i][1][results.finishTime])): #change if stepsize is smaller than 1 seconde 
-                    if 0<j <results.totalTime:
-                        customersInCanteenSeconds[j] += 1
-            Q3listAll.append(customersInCanteenSeconds) 
-            
-            
-            
-            
-        print("extension", results.extension)
-        print("poisson rate", results.poissonratearrivals) 
-            
-        print("Question 1 ")
-        print("Sojourn time")
-        print("Mean sojourn time", mean(Q1MeanSojourn))
-        print("Std sojourn time", std(Q1StdSojourn))
-        
-        print("   ")
-        print("Waiting time")
-        print("Average waiting time queue 0 = ", mean(Q1MeanQueue0))
-        print("stdv waiting time queue 0 = ", std(Q1StdQueue0))
-        print("Average waiting time queue 1 = ", mean(Q1MeanQueue1))
-        print("stdv waiting time queue 1 = ", std(Q1StdQueue1))
-        print("Average waiting time queue 2 = ", mean(Q1MeanQueue2))
-        print("stdv waiting time queue 2 = ", std(Q1StdQueue2))
-        print("  ")
-        print("Number customers")
-        print("Mean custumers in the canteen each second:", mean(Q1MeanNrCustomer))
-        print("Standard deviation customers in canteen:", std(Q1StdNrCustomer))
-        print("  ")
-        
         print("Question 2")
         print("Mean sojourn time per group", mean(Q2MeanSojournGroup))
         print("Std sojourn time per group", std(Q2StdSojournGroup))
         print(" ")
         # Confidence intervals question 4
-
-        
-        # Question 3
-        Q3listAllarray = array(Q3listAll)
-        Q3listAllFlatten = Q3listAllarray.flatten()
-        plt.hist(Q3listAllFlatten, bins= 40)
-        plt.show()
-        Mean = mean(Q3listAllFlatten) 
-        StandardDeviation = std(Q3listAllFlatten)
-        print("Question 3")
-        print("Mean:", Mean)
-        print("Standard deviation:", StandardDeviation)
-        
-        
-        # Question 4
-        print("Question 4")  
-        # Confidence interval individual customer
-        lb1 = mean(Q1MeanSojourn) - 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
-        ub1 = mean(Q1MeanSojourn) + 1.96*sqrt(var(Q1MeanSojourn)/nrRuns)
-        print("Half-width arbitrary customer", 1.96*sqrt(var(Q1MeanSojourn)/nrRuns))
-        print("Confidence interval arbitrary customer", lb1, ",", ub1)
-        # Confidence interval customer group
+        print("Confidence interval (Question 4)")  
         lb1 = mean(Q2MeanSojournGroup) - 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns)
         ub1 = mean(Q2MeanSojournGroup) + 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns)
         print("Half-width arbitrary group", 1.96*sqrt(var(Q2MeanSojournGroup)/nrRuns))
         print("Confidence interval arbitrary group", lb1, ",", ub1) # I think this should be arbitrary group, so I changed the printed sentences customer -> group
         
-        totalTime = time.time() - startTime
+        return "Question 2 finished"
         
-        return "Total time", totalTime
+        
+    def Question3(nrRuns):
+        # arrTime = 1
+        # finishTime = 8
+        listAll = []
+        for i in range(nrRuns):
+            sim = simulation.sim(results.poissonratearrivals, results.totalTime, results.meangroupsize, results.meanfood, results.cashpayments, results.meancash, results.meancard)
+            customersInCanteenSeconds = [0 for i in range(int(results.totalTime))] 
+            for i in range(len(sim[1])): 
+                for j in range(int(sim[1][i][1][results.arrTime]), int(sim[1][i][1][results.finishTime])): #change if stepsize is smaller than 1 seconde 
+                    if 0<j <results.totalTime:
+                        customersInCanteenSeconds[j] += 1
+            listAll.append(customersInCanteenSeconds) 
+        listAllarray = array(listAll)
+        listAllFlatten = listAllarray.flatten()
+        
+        plt.hist(listAllFlatten, bins= 40)
+        plt.show()
+        
+        Mean = mean(listAllFlatten) 
+        StandardDeviation = std(listAllFlatten)
+        print("Question 3")
+        print("Mean:", Mean)
+        print("Standard deviation:", StandardDeviation)
+        return "Question 3 is calculated"
     
-       
 
 
 # results.Question2(10)
-print(results.results(100000))
+print(results.Question1(1000))
