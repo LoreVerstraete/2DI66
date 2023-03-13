@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 class results:
     
     # input values
-    extension = 1
-    poissonratearrivals = 1
+    extension = 0
+    poissonratearrivals = 4
     meangroupsize = 3
     meanFood = 80 #seconds
     totalNrQueues = 3
@@ -54,7 +54,7 @@ class results:
         Q3listAll = []
         
         for i in range(nrRuns):
-            print("nrRun", i)
+            # print("nrRun", i)
             # Run the simulation every time
             sim = simulation.sim(results.extension, results.poissonratearrivals, results.totalTime, results.meangroupsize, results.meanFood, results.cashpayments, results.meancash, results.meancard)
     
@@ -155,25 +155,25 @@ class results:
         print("Question 1 ")
         print("Sojourn time")
         print("Mean sojourn time", mean(Q1MeanSojourn))
-        print("Std sojourn time", std(Q1StdSojourn))
+        print("Std sojourn time", mean(Q1StdSojourn))
         
         print("   ")
         print("Waiting time")
         print("Average waiting time queue 0 = ", mean(Q1MeanQueue0))
-        print("stdv waiting time queue 0 = ", std(Q1StdQueue0))
+        print("stdv waiting time queue 0 = ", mean(Q1StdQueue0))
         print("Average waiting time queue 1 = ", mean(Q1MeanQueue1))
-        print("stdv waiting time queue 1 = ", std(Q1StdQueue1))
+        print("stdv waiting time queue 1 = ", mean(Q1StdQueue1))
         print("Average waiting time queue 2 = ", mean(Q1MeanQueue2))
-        print("stdv waiting time queue 2 = ", std(Q1StdQueue2))
+        print("stdv waiting time queue 2 = ", mean(Q1StdQueue2))
         print("  ")
         print("Number customers")
         print("Mean custumers in the canteen each second:", mean(Q1MeanNrCustomer))
-        print("Standard deviation customers in canteen:", std(Q1StdNrCustomer))
+        print("Standard deviation customers in canteen:", mean(Q1StdNrCustomer))
         print("  ")
         
         print("Question 2")
         print("Mean sojourn time per group", mean(Q2MeanSojournGroup))
-        print("Std sojourn time per group", std(Q2StdSojournGroup))
+        print("Std sojourn time per group", mean(Q2StdSojournGroup))
         print(" ")
         # Confidence intervals question 4
 
@@ -214,7 +214,7 @@ class results:
 
 
 # results.Question2(10)
-print(results.results(10000))
+print(results.results(1000))
 
 
 
