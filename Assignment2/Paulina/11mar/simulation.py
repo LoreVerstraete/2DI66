@@ -4,12 +4,13 @@ from numpy import zeros, mean, random, std, sqrt, var, linspace, array
 #from numpy.ndarray import flatten
 import time
 import matplotlib.pyplot as plt
+import time 
 
 class simulation:
     # simulate use cases
     # for 1 hour: 12.00h-13.00h
 
-    extension = 2
+    extension = 0
     poissonratearrivals = 1
     meangroupsize = 3
     meanfood = 80 #seconds
@@ -188,7 +189,7 @@ class simulation:
         finishTime = 8
         listAll = []
         for i in range(numberOfRepeats):
-            sim = simulation.sim(simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, simulation.cashpayments, simulation.meancash, simulation.meancard)
+            sim = simulation.sim(simulation.extension, simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, simulation.cashpayments, simulation.meancash, simulation.meancard)
             customersInCanteenSeconds = [0 for i in range(int(simulation.totalTime))] 
             for i in range(len(sim[1])): 
                 for j in range(int(sim[1][i][1][arrTime]), int(sim[1][i][1][finishTime])): #change if stepsize is smaller than 1 seconde 
@@ -210,5 +211,9 @@ class simulation:
               
 sim = simulation.sim(simulation.extension, simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, simulation.cashpayments, simulation.meancash, simulation.meancard)
 # sim = simulation.sim(simulation.poissonratearrivals, simulation.totalTime, simulation.meangroupsize, simulation.meanfood, 0, simulation.meancash, simulation.meancard)
-all_results = simulation.results(sim) 
-# question3 = simulation.question3(50)    
+#all_results = simulation.results(sim) 
+start = time.time()
+question3 = simulation.question3(50000)    
+end = time.time()
+
+print("time: ",end-start)
