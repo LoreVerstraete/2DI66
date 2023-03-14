@@ -1,0 +1,47 @@
+extension 0 poisson rate 3 nr runs 500
+Question 1 
+Sojourn time
+Mean of mean sojourn time 115.48994162902625
+Half-width mean sojourn time 1.0840268274725604
+Confidence interval mean sojourn time 114.40591480155369 , 116.5739684564988
+Std sojourn time 87.44405304854803
+
+Waiting time queue 0
+Average waiting time queue 0 =  20.673254921196335
+stdv of mean waiting time 12.215563920247522
+Half-width average waiting time queue 0 1.0707413873193572
+Confidence interval average waiting time queue 0 19.602513533876976 , 21.743996308515694
+stdv waiting time queue 0 =  29.8484846010561
+
+Waiting time queue 1
+Average waiting time queue 1 =  20.50944498238546
+std of mean waiting time queue 1 =  11.73791102560241
+Half-width average waiting time queue 1 1.0288732651099775
+Confidence interval average waiting time queue 1 19.48057171727548 , 21.53831824749544
+stdv waiting time queue 1 =  29.55021863507986
+
+Waiting time queue 2
+Average waiting time queue 2 =  20.665353541326077
+std mean waiting time queue 2 =  11.810862657573466
+Half-width average waiting time queue 2 1.0352677575897251
+Confidence interval average waiting time queue 2 19.63008578373635 , 21.700621298915802
+stdv waiting time queue 2 =  29.544153118783495
+
+Number customers
+Mean custumers in the canteen each second: 16.869154444444444
+std mean custumers in the canteen each second: 2.5978940267519253
+Half-width mean custumers in the canteen each second 0.2277154515725921
+Confidence interval mean custumers in the canteen each second 16.64143899287185 , 17.096869896017036
+Standard deviation customers in canteen: 7.049686911018054
+
+Question 2
+Mean sojourn time per group 168.16771588392305
+Std mean sojourn time per group 15.061447158742588
+Half-width mean sojourn time per group 1.320194051709604
+Confidence interval mean sojourn time per group 166.84752183221346 , 169.48790993563264
+Std sojourn time per group 106.55989634328827
+
+Question 3
+Mean: 16.869154444444444
+Standard deviation: 7.7921066539965915
+Total time 165.23628544807434

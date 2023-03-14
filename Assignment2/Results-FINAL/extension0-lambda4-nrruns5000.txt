@@ -1,0 +1,47 @@
+extension 0 poisson rate 4 nr runs 5000
+Question 1 
+Sojourn time
+Mean of mean sojourn time 222.66785374240735
+Half-width mean sojourn time 2.31994464405422
+Confidence interval mean sojourn time 220.3479090983531 , 224.98779838646158
+Std sojourn time 127.39310551986662
+
+Waiting time queue 0
+Average waiting time queue 0 =  127.75223873757515
+stdv of mean waiting time 83.79409889700857
+Half-width average waiting time queue 0 2.3226539216968454
+Confidence interval average waiting time queue 0 125.42958481587831 , 130.074892659272
+stdv waiting time queue 0 =  90.71144448521018
+
+Waiting time queue 1
+Average waiting time queue 1 =  128.07495118022553
+std of mean waiting time queue 1 =  84.28623631490026
+Half-width average waiting time queue 1 2.336295274951146
+Confidence interval average waiting time queue 1 125.73865590527438 , 130.41124645517667
+stdv waiting time queue 1 =  90.90441974788135
+
+Waiting time queue 2
+Average waiting time queue 2 =  127.77375480685522
+std mean waiting time queue 2 =  84.16737468463197
+Half-width average waiting time queue 2 2.3330005986515507
+Confidence interval average waiting time queue 2 125.44075420820367 , 130.10675540550676
+stdv waiting time queue 2 =  90.78388499532623
+
+Number customers
+Mean custumers in the canteen each second: 41.74123411111111
+std mean custumers in the canteen each second: 16.26662176237998
+Half-width mean custumers in the canteen each second 0.4508877513628816
+Confidence interval mean custumers in the canteen each second 41.29034635974823 , 42.192121862473996
+Standard deviation customers in canteen: 17.944822352137432
+
+Question 2
+Mean sojourn time per group 282.8328541138384
+Std mean sojourn time per group 91.95992066107218
+Half-width mean sojourn time per group 2.548998953075384
+Confidence interval mean sojourn time per group 280.283855160763 , 285.3818530669138
+Std sojourn time per group 142.71134231096656
+
+Question 3
+Mean: 41.74123411111111
+Standard deviation: 25.70735925098479
+Total time 682.3757009506226

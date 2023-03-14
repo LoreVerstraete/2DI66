@@ -1,0 +1,261 @@
+extension 3 poisson rate 4 nr runs 10000
+Question 1 
+Sojourn time
+Mean sojourn time 111.72794617878696
+Half-width mean sojourn time 0.2407456975854249
+Confidence interval mean sojourn time 111.48720048120154 , 111.96869187637239
+Std sojourn time 85.57528533716531
+Half-width std sojourn time 0.2407456975854249
+Confidence interval std sojourn time 85.44947315019776 , 85.70109752413286   
+   
+Waiting time
+Average waiting time queue 0 =  19.766330930330856
+Half-width average waiting time queue 0 0.23193757572227092
+Confidence interval average waiting time queue 0 19.534393354608586 , 19.998268506053126
+stdv waiting time queue 0 =  26.00347978169136
+Half-width stdv waiting time queue 0 0.2276472928629837
+Confidence interval stdv waiting time queue 0 25.775832488828378 , 26.231127074554344
+Average waiting time queue 1 =  19.73004326432134
+Half-width average waiting time queue 1 0.23345366990731953
+Confidence interval average waiting time queue 1 19.49658959441402 , 19.963496934228658
+stdv waiting time queue 1 =  25.91384195179545
+Half-width stdv waiting time queue 1 0.22618879788328708
+Confidence interval stdv waiting time queue 1 25.687653153912162 , 26.14003074967874
+Average waiting time queue 2 =  19.734412649151164
+Half-width average waiting time queue 2 0.23243577151421538
+Confidence interval average waiting time queue 2 19.50197687763695 , 19.96684842066538
+stdv waiting time queue 2 =  25.91349242261302
+Half-width stdv waiting time queue 2 0.22473797777217863
+Confidence interval stdv waiting time queue 2 19.50197687763695 , 26.1382304003852
+
+Number customers
+Mean custumers in the canteen each second: 21.7540595
+Half-width mean custumers in the canteen each second 0.06496409506629475
+Confidence interval mean custumers in the canteen each second 21.689095404933706 , 21.819023595066295
+Standard deviation customers in canteen: 8.321163087776036
+Half-width standard deviation customers in canteen 0.04893102321389523
+Confidence interval standard deviation customers in canteen 8.272232064562141 , 8.37009411098993
+
+Question 2
+Mean sojourn time per group 163.86866540269807
+Half-width mean sojourn time per group 0.2904271358167525
+Confidence interval mean sojourn time per group 163.57823826688133 , 164.1590925385148
+Std sojourn time per group 105.10953026713476
+Half-width sojourn time per group 0.1645916610515224
+
+Question 3
+Mean: 21.7540595
+Standard deviation: 9.298389439002273
+Total time 1014.7476506233215
+
+
+###########################################################
+
+extension 3 poisson rate 3 nr runs 500
+Question 1 
+Sojourn time
+Mean sojourn time 98.11053065186229
+Half-width mean sojourn time 0.37987923403357104
+Confidence interval mean sojourn time 97.73065141782872 , 98.49040988589586
+Std sojourn time 81.64586723590293
+Half-width std sojourn time 0.37987923403357104
+Confidence interval std sojourn time 81.22249124287998 , 82.06924322892587
+
+Waiting time
+Average waiting time queue 0 =  6.332094406739401
+Half-width average waiting time queue 0 0.2587654627459702
+Confidence interval average waiting time queue 0 6.073328943993431 , 6.590859869485371
+stdv waiting time queue 0 =  12.97664969143138
+Half-width stdv waiting time queue 0 0.4081447140853704
+Confidence interval stdv waiting time queue 0 12.56850497734601 , 13.38479440551675
+Average waiting time queue 1 =  6.274533254608195
+Half-width average waiting time queue 1 0.2587875748885484
+Confidence interval average waiting time queue 1 6.015745679719647 , 6.533320829496743
+stdv waiting time queue 1 =  12.735732394886025
+Half-width stdv waiting time queue 1 0.41358060955866865
+Confidence interval stdv waiting time queue 1 12.322151785327357 , 13.149313004444693
+Average waiting time queue 2 =  6.287677529778025
+Half-width average waiting time queue 2 0.25570614622530763
+Confidence interval average waiting time queue 2 6.031971383552718 , 6.543383676003333
+stdv waiting time queue 2 =  12.965924835397672
+Half-width stdv waiting time queue 2 0.41886085030836095
+Confidence interval stdv waiting time queue 2 6.031971383552718 , 13.384785685706033
+
+Number customers
+Mean custumers in the canteen each second: 14.267255
+Half-width mean custumers in the canteen each second 0.1130550063357956
+Confidence interval mean custumers in the canteen each second 14.154199993664205 , 14.380310006335796
+Standard deviation customers in canteen: 5.552384930412494
+Half-width standard deviation customers in canteen 0.08729881451037351
+Confidence interval standard deviation customers in canteen 5.46508611590212 , 5.639683744922867
+
+Question 2
+Mean sojourn time per group 150.04389872396243
+Half-width mean sojourn time per group 0.7183593075326723
+Confidence interval mean sojourn time per group 149.32553941642976 , 150.7622580314951
+Std sojourn time per group 101.89551422758024
+Half-width sojourn time per group 0.7053730757384755
+Confidence interval sojourn time per group 101.19014115184176 , 102.60088730331871
+
+Question 3
+Mean: 14.267255
+Standard deviation: 5.786574959764628
+Total time 587.982362985611
+
+################################################
+
+extension 3 poisson rate 2 nr runs 500
+Question 1 
+Sojourn time
+Mean sojourn time 94.33212795405882
+Half-width mean sojourn time 0.3776705958130648
+Confidence interval mean sojourn time 93.95445735824576 , 94.70979854987188
+Std sojourn time 81.08215510629027
+Half-width std sojourn time 0.3776705958130648
+Confidence interval std sojourn time 80.55567890943935 , 81.6086313031412
+
+Waiting time
+Average waiting time queue 0 =  2.0789375444187552
+Half-width average waiting time queue 0 0.08947341556381615
+Confidence interval average waiting time queue 0 1.989464128854939 , 2.1684109599825714
+stdv waiting time queue 0 =  6.69176869558659
+Half-width stdv waiting time queue 0 0.21831436484031974
+Confidence interval stdv waiting time queue 0 6.47345433074627 , 6.91008306042691
+Average waiting time queue 1 =  2.1414389025890848
+Half-width average waiting time queue 1 0.09711723303379688
+Confidence interval average waiting time queue 1 2.0443216695552877 , 2.238556135622882
+stdv waiting time queue 1 =  6.898333044405942
+Half-width stdv waiting time queue 1 0.24530531977260628
+Confidence interval stdv waiting time queue 1 6.653027724633336 , 7.143638364178548
+Average waiting time queue 2 =  2.074491475668367
+Half-width average waiting time queue 2 0.09114565801355791
+Confidence interval average waiting time queue 2 1.983345817654809 , 2.165637133681925
+stdv waiting time queue 2 =  6.712668193187512
+Half-width stdv waiting time queue 2 0.22157411200144844
+Confidence interval stdv waiting time queue 2 1.983345817654809 , 6.934242305188961
+
+Number customers
+Mean custumers in the canteen each second: 9.246241666666666
+Half-width mean custumers in the canteen each second 0.07804605541368395
+Confidence interval mean custumers in the canteen each second 9.168195611252981 , 9.324287722080351
+Standard deviation customers in canteen: 4.198771075081986
+Half-width standard deviation customers in canteen 0.056212163584414776
+Confidence interval standard deviation customers in canteen 4.142558911497571 , 4.254983238666401
+
+Question 2
+Mean sojourn time per group 147.1335952589826
+Half-width mean sojourn time per group 0.8033864745676382
+Confidence interval mean sojourn time per group 146.33020878441496 , 147.93698173355025
+Std sojourn time per group 101.47691166843791
+Half-width sojourn time per group 0.8845007967598018
+Confidence interval sojourn time per group 100.59241087167811 , 102.3614124651977
+
+Question 3
+Mean: 9.246241666666666
+Standard deviation: 4.339784945700715
+Total time 192.46567940711975
+
+###############################################
+extension 3 poisson rate 1 nr runs 500
+Question 1 
+Sojourn time
+Mean sojourn time 92.63637246183276
+Half-width mean sojourn time 0.567708398254712
+Confidence interval mean sojourn time 92.06866406357805 , 93.20408086008747
+Std sojourn time 80.57439760391969
+Half-width std sojourn time 0.567708398254712
+Confidence interval std sojourn time 79.82294148283322 , 81.32585372500617
+
+Waiting time
+Average waiting time queue 0 =  0.45360814791545273
+Half-width average waiting time queue 0 0.044263764555255845
+Confidence interval average waiting time queue 0 0.4093443833601969 , 0.49787191247070856
+stdv waiting time queue 0 =  2.4175909688874233
+Half-width stdv waiting time queue 0 0.20954028065557373
+Confidence interval stdv waiting time queue 0 2.2080506882318494 , 2.6271312495429973
+Average waiting time queue 1 =  0.4442419818078531
+Half-width average waiting time queue 1 0.048153981253394894
+Confidence interval average waiting time queue 1 0.39608800055445825 , 0.492395963061248
+stdv waiting time queue 1 =  2.3719452197907165
+Half-width stdv waiting time queue 1 0.20169372852487577
+Confidence interval stdv waiting time queue 1 2.170251491265841 , 2.573638948315592
+Average waiting time queue 2 =  0.4461123146491475
+Half-width average waiting time queue 2 0.048405313343056186
+Confidence interval average waiting time queue 2 0.3977070013060913 , 0.4945176279922037
+stdv waiting time queue 2 =  2.3590431045747366
+Half-width stdv waiting time queue 2 0.21886524031358
+Confidence interval stdv waiting time queue 2 0.3977070013060913 , 2.577908344888317
+
+Number customers
+Mean custumers in the canteen each second: 4.440511111111111
+Half-width mean custumers in the canteen each second 0.05153361119341123
+Confidence interval mean custumers in the canteen each second 4.3889774999177 , 4.492044722304523
+Standard deviation customers in canteen: 2.7718867036135126
+Half-width standard deviation customers in canteen 0.03877850075303646
+Confidence interval standard deviation customers in canteen 2.733108202860476 , 2.810665204366549
+
+Question 2
+Mean sojourn time per group 145.0577050934357
+Half-width mean sojourn time per group 1.2416049684941883
+Confidence interval mean sojourn time per group 143.8161001249415 , 146.29931006192987
+Std sojourn time per group 100.02015129406055
+Half-width sojourn time per group 1.2307558881494844
+Confidence interval sojourn time per group 98.78939540591107 , 101.25090718221004
+
+Question 3
+Mean: 4.440511111111111
+Standard deviation: 2.867879000409127
+Total time 28.55338954925537
+
+########################################################
+
+extension 3 poisson rate 4 nr runs 5000
+Question 1 
+Sojourn time
+Mean sojourn time 111.63071299862911
+Half-width mean sojourn time 0.3194772187725963
+Confidence interval mean sojourn time 111.31123577985652 , 111.9501902174017
+Std sojourn time 85.4933743460081
+Half-width std sojourn time 0.3194772187725963
+Confidence interval std sojourn time 85.32131541188423 , 85.66543328013196
+
+Waiting time
+Average waiting time queue 0 =  19.687386951288197
+Half-width average waiting time queue 0 0.30968790087573955
+Confidence interval average waiting time queue 0 19.377699050412456 , 19.997074852163937
+stdv waiting time queue 0 =  26.09440459898943
+Half-width stdv waiting time queue 0 0.31628879271688704
+Confidence interval stdv waiting time queue 0 25.778115806272545 , 26.410693391706317
+Average waiting time queue 1 =  19.646525331434525
+Half-width average waiting time queue 1 0.3077627984553704
+Confidence interval average waiting time queue 1 19.338762532979153 , 19.954288129889896
+stdv waiting time queue 1 =  25.92814580964565
+Half-width stdv waiting time queue 1 0.3082706214900355
+Confidence interval stdv waiting time queue 1 25.619875188155614 , 26.236416431135684
+Average waiting time queue 2 =  19.6809816412915
+Half-width average waiting time queue 2 0.30819862466534226
+Confidence interval average waiting time queue 2 19.37278301662616 , 19.98918026595684
+stdv waiting time queue 2 =  26.033624121508062
+Half-width stdv waiting time queue 2 0.3155553798867337
+Confidence interval stdv waiting time queue 2 19.37278301662616 , 26.349179501394797
+
+Number customers
+Mean custumers in the canteen each second: 21.71554227777778
+Half-width mean custumers in the canteen each second 0.08696823119793116 
+Confidence interval mean custumers in the canteen each second 21.628574046579846 , 21.80251050897571
+Standard deviation customers in canteen: 8.329509837691157
+Half-width standard deviation customers in canteen 0.06707973501483372
+Confidence interval standard deviation customers in canteen 8.262430102676323 , 8.396589572705992
+
+Question 2
+Mean sojourn time per group 163.63731045829965
+Half-width mean sojourn time per group 0.3913170490939308
+Confidence interval mean sojourn time per group 163.2459934092057 , 164.0286275073936
+Std sojourn time per group 104.94491148543084
+Half-width sojourn time per group 0.2268268152308655
+Confidence interval sojourn time per group 104.71808467019997 , 105.1717383006617
+
+Question 3
+Mean: 21.71554227777778
+Standard deviation: 9.223959945817516
+Total time 972.435070514679

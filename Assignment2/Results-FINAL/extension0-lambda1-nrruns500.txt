@@ -1,0 +1,47 @@
+extension 0 poisson rate 1 nr runs 500
+Question 1 
+Sojourn time
+Mean of mean sojourn time 96.27909665079845
+Half-width mean sojourn time 0.5472033006568827
+Confidence interval mean sojourn time 95.73189335014156 , 96.82629995145534
+Std sojourn time 81.14816697767883
+   
+Waiting time queue 0
+Average waiting time queue 0 =  1.0596070257252876
+stdv of mean waiting time 1.0551218537960696
+Half-width average waiting time queue 0 0.09248550823363737
+Confidence interval average waiting time queue 0 0.9671215174916503 , 1.152092533958925
+stdv waiting time queue 0 =  4.636868258755015
+
+Waiting time queue 1
+Average waiting time queue 1 =  1.0952672178436909
+std of mean waiting time queue 1 =  1.0842582606158198
+Half-width average waiting time queue 1 0.09503942689538411
+Confidence interval average waiting time queue 1 1.0002277909483068 , 1.1903066447390749
+stdv waiting time queue 1 =  4.816520974582405
+
+Waiting time queue 2
+Average waiting time queue 2 =  1.0700637203933976
+std mean waiting time queue 2 =  1.0735181144513106
+Half-width average waiting time queue 2 0.09409801157642876
+Confidence interval average waiting time queue 2 0.9759657088169689 , 1.1641617319698263
+stdv waiting time queue 2 =  4.619960256556227
+
+Number customers
+Mean custumers in the canteen each second: 4.638716111111112
+std mean custumers in the canteen each second: 0.6193086016418572
+Half-width mean custumers in the canteen each second 0.054284792387004
+Confidence interval mean custumers in the canteen each second 4.584431318724108 , 4.693000903498116
+Standard deviation customers in canteen: 2.909529578407859
+
+Question 2
+Mean sojourn time per group 148.46157088123718
+Std mean sojourn time per group 13.361486187022777
+Half-width mean sojourn time per group 1.1711859026686098
+Confidence interval mean sojourn time per group 147.29038497856857 , 149.6327567839058
+Std sojourn time per group 100.5548695182201
+
+Question 3
+Mean: 4.638716111111111
+Standard deviation: 3.018378346151823
+Total time 105.51319146156311
