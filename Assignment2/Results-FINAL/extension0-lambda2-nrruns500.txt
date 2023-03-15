@@ -1,0 +1,47 @@
+extension 0 poisson rate 2 nr runs 500
+Question 1 
+Sojourn time
+Mean of mean sojourn time 100.8150640915266
+Half-width mean sojourn time 0.46981707524739397
+Confidence interval mean sojourn time 100.3452470162792 , 101.28488116677399
+Std sojourn time 82.67329462425053
+
+Waiting time queue 0
+Average waiting time queue 0 =  5.452977919373472
+stdv of mean waiting time 3.164883872410197
+Half-width average waiting time queue 0 0.2774143028003973
+Confidence interval average waiting time queue 0 5.175563616573075 , 5.73039222217387
+stdv waiting time queue 0 =  13.503147767472937
+
+Waiting time queue 1
+Average waiting time queue 1 =  5.351793784192544
+std of mean waiting time queue 1 =  3.2524631454894717
+Half-width average waiting time queue 1 0.2850909645549881
+Confidence interval average waiting time queue 1 5.066702819637555 , 5.636884748747532
+stdv waiting time queue 1 =  13.207484255662257
+
+Waiting time queue 2
+Average waiting time queue 2 =  5.420084689541644
+std mean waiting time queue 2 =  3.046491779779805
+Half-width average waiting time queue 2 0.26703677832929296
+Confidence interval average waiting time queue 2 5.153047911212352 , 5.687121467870937
+stdv waiting time queue 2 =  13.37968172233885
+
+Number customers
+Mean custumers in the canteen each second: 9.763418333333332
+std mean custumers in the canteen each second: 1.0479315263788487
+Half-width mean custumers in the canteen each second 0.09185524824693023
+Confidence interval mean custumers in the canteen each second 9.671563085086403 , 9.855273581580262
+Standard deviation customers in canteen: 4.482862350029471
+
+Question 2
+Mean sojourn time per group 153.00930584643922
+Std mean sojourn time per group 9.996723367492216
+Half-width mean sojourn time per group 0.8762514376773497
+Confidence interval mean sojourn time per group 152.13305440876186 , 153.88555728411657
+Std sojourn time per group 102.65978176109108
+
+Question 3
+Mean: 9.763418333333334
+Standard deviation: 4.684770562803298
+Total time 122.33191919326782
