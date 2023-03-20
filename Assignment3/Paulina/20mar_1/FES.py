@@ -1,4 +1,5 @@
 import heapq
+from collections import deque
 
 class FES :
     
@@ -15,11 +16,10 @@ class FES :
         return len(self.events) == 0
         
     def __str__(self):
-        # Note that if you print self.events, it would not appear to be sorted
-        # (although they are sorted internally).
-        # For this reason we use the function 'sorted'
         s = ''
         sortedEvents = sorted(self.events)
         for e in sortedEvents :
             s += str(e) + '\n'
         return s
+
+print(FES())

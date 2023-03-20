@@ -26,14 +26,19 @@ class Customer :
         #self.waitingTime = 0 
 
 
-    def moveTo(self, floor, position ): 
+    def moveTo(self, floor, position): 
         """
         move to and from the elevator.
         """ 
-        self.position = position 
-        self.floor  = floor 
+        self.position = position # 0 if still in the queue 
+        self.floor  = floor # at what floor they are 
 
-    
+    def directionCustomer(self, currentFloor, destinationFloor):
+        if max(currentFloor, destinationFloor) == currentFloor: 
+            return False # move up 
+        else: 
+            return True # move down 
+
     #def enterElevator(self):
         
    

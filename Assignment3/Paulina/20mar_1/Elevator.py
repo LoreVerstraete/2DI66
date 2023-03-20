@@ -16,12 +16,19 @@ class Elevator:
     def movingDoors(self, doorDist):
         self.doorDist = doorDist
 
-    def stopElevator(self, customer):
+    def stopElevator(self, floor, customer):
+        self.floor = floor 
         Elevator.movingDoors()
         Elevator.enterElevator()
         Customer.leaveElevator()
         Elevator.movingDoors()
 
+    def checkIfStop(self, destinationFloors, floor):
+        "checks if there is a customer that want to get out of the elevator at this floor"
+        if floor in destinationFloors:
+            return True 
+        else:
+            return False 
     #def moveElevator(self,nrFloors):
 
 

@@ -21,21 +21,22 @@ class simulation:
         self.nrElevators = nrElevators
 
     def simulate(self, T):
+        fes = FES()
+        res = Results()
+        queue = deque()
         S = 0 
         q = 0 
-        queue = deque()
         t = 0 # time at the beginning 
-        fes = FES()
-        results = Results.Results()
         a = self.arrDist0.rvs()
         firstEvent = Event(Event.ARRIVAL, a)
         fes.add(firstEvent)
-        results.registerQueueLength(t,len(queue))
+        res.registerQueueLength(t,len(queue))
         while t<T: 
             e = fes.next()
             tOld = t 
             customer = e.next()
             t = e.time()
+            
 
 # choose floor: x[i] = random.choices(range(nrStates), weights = p[x[i-1]], k = 1)[0]
 
