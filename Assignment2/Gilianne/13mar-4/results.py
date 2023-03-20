@@ -12,7 +12,7 @@ class results:
     
     # input values
     extension = 0
-    poissonratearrivals = 1
+    poissonratearrivals = 4
     meangroupsize = 3
     meanFood = 80 #seconds
     totalNrQueues = 3
@@ -155,7 +155,7 @@ class results:
             
             
            
-        print("extension", results.extension, "poisson rate", results.poissonratearrivals)
+        print("extension", results.extension, "poisson rate", results.poissonratearrivals, "nr runs", nrRuns)
             
         print("Question 1 ")
         print("Sojourn time")
@@ -264,7 +264,7 @@ class results:
 
 
 # results.Question2(10)
-results.results(10000)
+results.results(5000)
 
 
 
