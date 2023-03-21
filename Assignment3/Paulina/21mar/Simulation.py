@@ -51,14 +51,16 @@ class Simulation:
                 print("door", doorDist)
                 a = self.arrDist0.rvs() 
                 nextEvent = Event(Event.ARRIVAL, a+t)
-                print(nextEvent)
+                #print(nextEvent)
                 fes.add(nextEvent)
                 nextEvent = Event(Event.ELEVATORSTOPS, t+ Elevator.moveTime)
-                if Elevator.floor == 0: # checks if the direction of he elevator needs to change 
-                    Elevator.directionUp = True
-                if Elevator.floor == 4: 
-                    Elevator.directionUp = False
-                Elevator.floor = Elevator.newFloor(Elevator.floor, Elevator.directionUp)
+                print("floor original: ", elevator.floor)
+                if elevator.floor == 0: # checks if the direction of he elevator needs to change 
+                    elevator.directionUp = True
+                if elevator.floor == 1: 
+                    elevator.directionUp = False
+                elevator.floor = elevator.newFloor(elevator.floor, elevator.directionUp)
+                print("floor new: ", elevator.floor)
 
                 print(nextEvent)
             elif e.type == Event.ELEVATORSTOPS:
@@ -67,8 +69,6 @@ class Simulation:
                     Elevator.floors += 1
                     queueElevator.remove(c)
                     #print(queueElevator)
-
-            
 
 
 # destinationFloor = random.choices(range(nrStates), weights = p[x[i-1]], k = 1)[0] for x[i]
