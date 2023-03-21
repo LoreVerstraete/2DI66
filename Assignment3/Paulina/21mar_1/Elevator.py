@@ -3,9 +3,9 @@ from Customer import Customer
 class Elevator:
     ''' Describes the elevator processes '''
     
-    moveTime = 6
-    maxPeople = 10
-    floors = 4
+    MOVETIME = 6
+    MAXPEOPLE = 10
+    FLOORS = 4
 
     def __init__(self,elevatorNumber):
         self.elevatorNumber = elevatorNumber
@@ -29,11 +29,11 @@ class Elevator:
         Calculates the new floor.
         """
         if directionUp:
-            return floornumber + 1
+            self.floor = floornumber + 1
         else:
-            return floornumber - 1
+            self.floor = floornumber - 1
 
-        
+    
 
 '''
     def stopElevator(self, floor, customer):

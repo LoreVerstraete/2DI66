@@ -14,7 +14,7 @@ class FES :
     
     def isEmpty(self):
         return len(self.events) == 0
-        
+
     def __str__(self):
         s = ''
         sortedEvents = sorted(self.events)

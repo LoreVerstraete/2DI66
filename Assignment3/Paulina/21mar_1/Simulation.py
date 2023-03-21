@@ -49,30 +49,66 @@ class Simulation:
             queueAllFloors[i].append(c)
             firstEvent = Event(Event.ARRIVAL, c.arrivalTime, c.startFloor, c.destinationFloor, c.directionUp)
             fes.add(firstEvent)
-        
+
+
+        e = fes.next()
+        print("user: ", e.destinationFloor, e.directionUp, e.floor, e.arrtime )
+        print(elevator.directionUp)
+        if e.directionUp == elevator.directionUp:
+            queueElevatorOne.append(e.destinationFloor)
+            print(queueElevatorOne)
+            elevator.floor = e.floor
+            t += e.arrtime + e.floor * Elevator.MOVETIME
+            print("e.arrtime + e.floor * Elevator.MOVETIME",t)
+            elevator.movingDoors(self.doorDist.rvs())
+            t += elevator.doorDist
+            print("elevator ",t)
+            elevator.newFloor(elevator.floor, elevator.directionUp)
+            needTOMoveFloors = int(abs(e.destinationFloor-elevator.floor))
+            print("needTOMoveFloors", needTOMoveFloors)
+            for i in range(needTOMoveFloors):
+                 elevator.movingDoors(self.doorDist.rvs())
+            t += elevator.MOVETIME * needTOMoveFloors
+            print("elevator.MOVETIME * needTOMoveFloors",t)
+            elevator.movingDoors(self.doorDist.rvs())
+            t += elevator.doorDist
+            print("elevator.doorDist",t)
+            queueElevatorOne.pop()
+            print(queueElevatorOne)
+
+
+
+"""       
         i=0
         while t<T: 
             print("round", i)
             i +=1
             e = fes.next()  # taking first element of the fes list and deleting this event 
-            cnew = Customer(self.arrDist[e.floor].rvs(), random.choices(range(Elevator.floors + 1), weights = probFloor[0], k = 1)[0], 0) #replacing customer
+            cnew = Customer(self.arrDist[e.floor].rvs(), random.choices(range(Elevator.FLOORS + 1), weights = probFloor[0], k = 1)[0], 0) #replacing customer
             queueAllFloors[e.floor].append(cnew)
             fes.add(Event(Event.ARRIVAL, cnew.arrivalTime, cnew.startFloor, cnew.destinationFloor, cnew.directionUp))
-            t = e.time
-            print(t)
-            c1 = e.customer
-            c1Floor = e.floor
-            print("new Customer start floor: ",c1Floor)
+            t = e.arrtime
+            # print(t)
+            # c1 = e.customer
+            # c1Floor = e.floor
+            print("new Customer start floor: ", e.floor)
             print("destination Floor: ", e.destinationFloor)
             if e.type == Event.ARRIVAL: 
-                queueAllFloors[e.floor].append([e.time, e.destinationFloor])
-                
+                queueAllFloors[e.floor].append([e.arrtime, e.destinationFloor])
+                elevator.movingDoors(self.doorDist.rvs())
+                t += elevator.doorDist # time it takes the elevator doors to open  
+                #print("door", t, doorDist)
+                # makes sure that the eelevator doesn't move outside the building 
+                if elevator.floor == 0: 
+                    elevator.directionUp = True 
+                if elevator.floor == 4:
+                    elevator.directionUp = not elevator.directionUp
+                # print("old floor: ", elevator.floor)
+                elevator.newFloor(elevator.floor, elevator.directionUp)
+                # print("new floor: ", elevator.floor)
 
-                doorDist = self.doorDist.rvs()
-                t += doorDist # Elevator.movingDoors(doorDist) # opend door time 
-                print("door", doorDist)
 
-"""                 if  elevator.numberOfPeople < elevator.maxPeople:
+                if  elevator.numberOfPeople < elevator.maxPeople:
                     queueGroundFloor[0].remove(c1)
                     queueElevatorOne.append(c1)
                     t += 1
@@ -128,13 +164,13 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 
 
 start = time.time()
-sim.simulate(10)
+sim.simulate(15)
 end = time.time()
 
 print("time: " , end-start)
 
-
-"""         c0 = Customer(self.arrDist[0].rvs(), random.choices(range(Elevator.floors + 1), weights = probFloor[0], k = 1)[0], 0)
+"""
+        c0 = Customer(self.arrDist[0].rvs(), random.choices(range(Elevator.floors + 1), weights = probFloor[0], k = 1)[0], 0)
         c1 = Customer(self.arrDist[1].rvs(), random.choices(range(Elevator.floors + 1), weights = probFloor[1], k = 1)[0], 1)
         c2 = Customer(self.arrDist2.rvs(), random.choices(range(Elevator.floors + 1), weights = probFloor[2], k = 1)[0], 2)
         c3 = Customer(self.arrDist3.rvs(), random.choices(range(Elevator.floors + 1), weights = probFloor[3], k = 1)[0], 3)

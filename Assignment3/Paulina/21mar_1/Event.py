@@ -10,7 +10,7 @@ class Event:
 
     def __init__(self, typ, arrivaltime, startfloor, destinationFloor, directionUp ,cust = None):
         self.type = typ
-        self.time = arrivaltime 
+        self.arrtime = arrivaltime 
         self.customer = cust
         self.floor = startfloor 
         self.directionUp = directionUp
@@ -21,16 +21,13 @@ class Event:
         '''
         sorting the event list. 
         '''
-        return self.time < other.time
+        return self.arrtime < other.arrtime
     
     def __str__(self):
         st = ("arrival", "departure", "elevator stops")
-        return st[self.type] + " of customer " + str(self.customer) + " at time t: " +str(self.time)
+        return st[self.type] + " of customer " + str(self.customer) + " at time t: " +str(self.arrtime) +" start Floor: "+ str(self.floor) + " the deniation floor " + str(self.destinationFloor)
 
-    def doors(self, time, floor):
-        self.time = time
-        Elevator.floor = floor # add number of Elevator 
-
+    
 
 
     
