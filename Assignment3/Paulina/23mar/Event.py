@@ -25,7 +25,7 @@ class Event:
         if st[self.type] == "elevator stops":
             return st[self.type] + " at time t: " + str(self.time)
         else: 
-            return st[self.type] + " of customer " + str(self.customer) + " at time t: " +str(self.time)
+            return st[self.type] + " of customer at time t: " +str(self.time) + " at floor: " + str(self.floor)
 
     def doors(self, time, floor):
         self.time = time
