@@ -51,7 +51,6 @@ class Simulation:
                     change elevator direction to going up
                 if elevator.floor == TOPFLOOR
                     change elevator direction to going down
-
             for each floor:
                 update the queue (check if another arrival appeared when passing each floor)
                 if queueFloor = empty AND queueElevator == empty

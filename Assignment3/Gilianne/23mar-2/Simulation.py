@@ -12,10 +12,11 @@ import random
 
 class Simulation:
     ''' Describes the simulation '''
-    def __init__(self, arrDist0, doorDist, nrElevators): #, arrDist1, arrDist2, arrDist3, arrDist4, doorDist, nrElevators):
-        self.arrDist0 = arrDist0
+    def __init__(self, arrDist, doorDist, nrElevators): #, arrDist1, arrDist2, arrDist3, arrDist4, doorDist, nrElevators):
+        self.arrDist = arrDist
         self.doorDist = doorDist
         self.nrElevators = nrElevators
+        self.probFloor = probFloor 
 
 
     def simulate(self, T):
@@ -26,18 +27,18 @@ class Simulation:
         S = 0 # queue length integrated  
         q = 0 # queue length 
         t = 0 # time at the beginning 
-        a = self.arrDist0.rvs()  # samples number of the next arrival 
+        a = self.arrDist[0].rvs()  # samples number of the next arrival 
         print("first arrival", a)
-        firstEvent = Event(Event.ARRIVAL, a, 0)  # schedule first event 
+        firstEvent = Event(Event.ARRIVAL, a, 0, 1)  # schedule first event 
         secondEvent = Event(Event.ELEVATORSTOPS, 0)
         elevator = Elevator(1)
         fes.add(firstEvent) # adding first event to future events 
         fes.add(secondEvent)
-        i=0
+        round=0
         while t<T: 
             print("  ")
-            print("round", i)
-            i +=1
+            print("round", round)
+            round +=1
             e = fes.next()  # taking first element of the fes list and deleting this event 
             t = e.time
             print(e)
@@ -49,13 +50,16 @@ class Simulation:
                 if len(queueElevator) > 0 or len(queue[f]) > 0:
                 # while len(queueElevator) > 0:
                     t += self.doorDist.rvs()
-                    print("queueElevator going wrong",queueElevator)
+                    removeCustomers = []
                     for i in queueElevator:
                         # i = queueElevator[0]
                         print("customer", i)
                         if i.destinationFloor == f:
-                            queueElevator.remove(i)
-                            t += 1                       
+                            removeCustomers.append(i)
+                    for k in removeCustomers:
+                        queueElevator.remove(k)
+                    t += 1     
+                                   
                     
                     if len(queueElevator) < elevator.maxPeople:
                         for a in arange(5):
@@ -82,14 +86,14 @@ class Simulation:
             if e.type == Event.ARRIVAL: # arrival of a customer
                 for a in arange(5):
                     if e.floor == a:
-                        des = random.randint(0,1)
+                        des = random.choices(range(5), weights = probFloor[0], k = 1)[0] #random.randint(0,1)
                         print("des", des)
                         c = Customer(t, des, a)
                         queue[a].append(c)
                         print("queue", queue[a])
                         print(c)
-                        a = self.arrDist0.rvs() 
-                        nextCustomer = Event(Event.ARRIVAL, t+a, e.floor)
+                        a = self.arrDist[0].rvs() 
+                        nextCustomer = Event(Event.ARRIVAL, t+a)
                         fes.add(nextCustomer) 
             # if e.type == Event.ARRIVAL1:
             #     for a in arange(5):
@@ -158,15 +162,17 @@ arrDist2 = Distribution(stats.expon(scale = 60/2.1))
 arrDist3 = Distribution(stats.expon(scale = 60/9.2))
 arrDist4 = Distribution(stats.expon(scale = 60/8.8))
 
+arrDist = [arrDist0, arrDist1, arrDist2, arrDist2, arrDist3, arrDist4]
+
 doorDist = Distribution(stats.expon(scale = 3))
 
 nrElevators = 1 # amount of elevators
 
 #print(arrDist0.rvs())
-sim = Simulation(arrDist0, doorDist, nrElevators)
+sim = Simulation(arrDist, doorDist, nrElevators)
 #print(sim.simulate(3))
 
-sim.simulate(20)
+sim.simulate(200)
 
 """         self.arrDist1 = arrDist1
         self.arrDist2 = arrDist2
