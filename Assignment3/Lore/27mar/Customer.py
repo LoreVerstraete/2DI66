@@ -14,7 +14,9 @@
 
 class Customer :
 
-    def __init__(self, arrival, destinationFloor, startFloor):
+    MOVETIME = 1
+
+    def __init__(self, arrival, destinationFloor, startFloor, custnr=None):
         ''' Customer has the Atributes: arrivalTime, destinationFloor, startFloor, directionUp '''
         self.arrivalTime = arrival
         self.destinationFloor = destinationFloor
@@ -24,9 +26,18 @@ class Customer :
         else: 
             self.directionUp = False
         self.floordiff = abs(startFloor-destinationFloor)
+        self.custnr = custnr
+
+    def impatience(self,impatienceDown, impatienceUp): 
+        if self.directionUp:
+            impatienceTime = impatienceUp[self.floordiff]  
+        else:
+            impatienceTime = impatienceDown[self.floordiff]
+        return impatienceTime     
+            
 
     def __str__(self):
-        return "Customer that arrives at floor "+ str(self.startFloor) + " at time " + str(self.arrivalTime) + " with destination floor " + str(self.destinationFloor)
+        return "Customer "+ str(self.custnr) + " arrives at floor "+ str(self.startFloor) + " at time " + str(self.arrivalTime) + " with destination floor " + str(self.destinationFloor)
 
     # def moveTo(self, floor, position): 
     #     """
@@ -40,6 +51,7 @@ class Customer :
     #         return False # move up 
     #     else: 
     #         return True # move down 
-
-# c = Customer(10, 1, 0)
-# print(c.directionUp)
+impatienceDown = [0, 10, 20, 40, 60] # seconds before customer takes stairs for amount of floors downstairs
+impatienceUp = [0, 30, 60, 100, 150] # seconds before customer takes stairs for amount of floors upstairs
+c = Customer(10, 1, 0)
+print(c.impatience(impatienceDown, impatienceUp))

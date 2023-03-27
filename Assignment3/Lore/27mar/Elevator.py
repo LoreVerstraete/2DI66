@@ -15,9 +15,6 @@ class Elevator:
         self.destinationFloor = []
         self.stopElevator = False
 
-    def movingDoors(self, doorDist):  #time of the door openong/closing 
-        self.doorDist = doorDist
-
     def checkIfStop(self, destinationFloors):
         "checks if there is a customer that want to get out of the elevator at this floor"
         if  self.floornumber in destinationFloors:
@@ -25,7 +22,7 @@ class Elevator:
         else:
             return False 
         
-    def newFloor(self, floornumber):
+    def newFloor(self):
         """
         Calculates the new floor.
         """
@@ -38,3 +35,16 @@ class Elevator:
             if self.floornumber == 0:
                 self.directionUp = True
     
+    def checkLeaving(self, queueElevator_elevator):
+        removeCustomers = []
+        for customer_elevator in queueElevator_elevator: 
+                    if customer_elevator.destinationFloor == self.floornumber: 
+                        removeCustomers.append(customer_elevator)
+        return removeCustomers
+    
+    def checkEntering(self, queueFloor_elevator):
+        addCustomers = []
+        for customer_floor in queueFloor_elevator:
+            if customer_floor.directionUp == self.directionUp:
+                addCustomers.append(customer_floor)
+        return addCustomers 

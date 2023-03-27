@@ -64,6 +64,7 @@ class Simulation:
                 round += 1
             e = fes.next()  # taking first element of the fes list and deleting this event 
             t = e.time
+            print("event str",e)
 
             if e.type == Event.ELEVATORSTOPS:
                 elevator_i = elevatorList[e.elevatorNr]
