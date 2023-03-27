@@ -234,8 +234,3 @@ cI = ConfidenceIntervals(WaitingTime, PeopleInTheElevator, noEnteryLimitOfTheEle
 
 print(cI)
 
-WaitingTime = array(WaitingTime)
-
-noEnteryLimitOfTheElevator = array(noEnteryLimitOfTheElevator)
-
-print("waiting time: ","\n", WaitingTime, "\n","people in elevator: ","\n", PeopleInTheElevator, "\n","no entry: ","\n", noEnteryLimitOfTheElevator )
