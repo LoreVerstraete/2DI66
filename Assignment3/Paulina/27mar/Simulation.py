@@ -222,7 +222,7 @@ noEnteryLimitOfTheElevator = list(zeros(nrRuns))
 
 for i in range(nrRuns): 
     start = time.time()
-    results  = sim.simulate(1_000_0)
+    results  = sim.simulate(10_000)
     end = time.time()
     #print(results.getMeanWaitingTime())
     print("time: ",end-start)

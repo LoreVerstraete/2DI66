@@ -1,4 +1,5 @@
 from Elevator import Elevator
+from numpy import zeros
 
 class Results:
     ''' Calculates the results.'''

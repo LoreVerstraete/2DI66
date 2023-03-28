@@ -167,6 +167,7 @@ probFloor = array([[0, 0.1, 0.3, 0.4, 0.2],
              [0.6, 0.2, 0, 0.1, 0.1],
              [0.6, 0.2, 0.1, 0, 0.1],
              [0.5, 0.2, 0.2, 0.1, 0]])
+
 arrDist0 = Distribution(stats.expon(scale = 60/13.1))
 arrDist1 = Distribution(stats.expon(scale = 60/3.4))
 arrDist2 = Distribution(stats.expon(scale = 60/2.1))
@@ -180,6 +181,7 @@ probFloorQ5 = array([[0, 0.1, 0.3, 0.4, 0.2],
              [0, 0, 0, 0.5, 0.5],
              [0.6, 0.2, 0.1, 0, 0.1],
              [0.5, 0.2, 0.2, 0.1, 0]])
+
 arrDist1Q5 = Distribution(stats.expon(scale = 60/(3.4*0.3)))
 arrDist2Q5 = Distribution(stats.expon(scale = 60/(2.1*0.2)))
 arrDistQ5 = [arrDist0, arrDist1, arrDist2, arrDist2, arrDist3, arrDist4]
@@ -206,7 +208,7 @@ noEnteryLimitOfTheElevator = list(zeros(nrRuns))
 
 for i in range(nrRuns): 
     start = time.time()
-    results  = sim.simulate(1_000_0)
+    results  = sim.simulate(10_000)
     end = time.time()
     #print(results.getMeanWaitingTime())
     print("time: ",end-start)
@@ -216,4 +218,4 @@ for i in range(nrRuns):
 
 cI = ConfidenceIntervals(WaitingTime, PeopleInTheElevator, noEnteryLimitOfTheElevator, nrRuns)
 
-print(cI) """
+print(cI)"""
