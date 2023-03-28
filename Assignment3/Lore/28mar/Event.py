@@ -26,7 +26,7 @@ class Event:
         '''
         return self.time < other.time
     
-    def __str__(self):
+"""     def __str__(self):
         if self.type == Event.CUSTOMER_ARRIVAL:
             return "Customer arrival at floor " + str(self.floor) + " at time " + str(self.time) + " and wants to go to floor " + str(self.destfloor)
         elif self.type == Event.CUSTOMER_IMPATIENT:
@@ -40,5 +40,5 @@ class Event:
         elif self.type == Event.ELEVATOR_OPEN_DOORS:
             return "Elevator " + str(self.elevatorNr) + " opens doors at time " + str(self.time)
         elif self.type == Event.ELEVATOR_CLOSE_DOORS:
-            return "Elevator " + str(self.elevatorNr) + " closes doors at time " + str(self.time)
+            return "Elevator " + str(self.elevatorNr) + " closes doors at time " + str(self.time) """
         

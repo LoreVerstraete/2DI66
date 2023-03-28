@@ -36,5 +36,6 @@ class Customer :
         return impatienceTime     
             
 
-    def __str__(self):
+"""   def __str__(self):
         return "Customer "+ str(self.custnr) + " arrives at floor "+ str(self.startFloor) + " at time " + str(self.arrivalTime) + " with destination floor " + str(self.destinationFloor)
+"""

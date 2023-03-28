@@ -4,20 +4,25 @@ from numpy import zeros
 class Results:
     ''' Calculates the results.'''
 
-    def __init__(self):
+    def __init__(self, numbersOfAllElevators):
         self.sumWaitingTime = zeros(Elevator.FLOORS)
         self.sumPeopleInTheElevator = 0 
         self.totalTime = 0
         self.noEnteryLimitOfTheElevator = zeros(Elevator.FLOORS)
-        self.allPeople = 0 
-        self.oldTime = 0
+        self.allPeople = [0] * Elevator.FLOORS
+        self.oldTime = [0] * numbersOfAllElevators
+        self.numbersOfAllElevators = numbersOfAllElevators
         
 
     def getMeanWaitingTime(self):
-        return self.sumWaitingTime / self.totalTime
+        return self.sumWaitingTime / self.allPeople
     
+    def registerPeopleInElevator(self, t, peopleInElevator, nrElevator):
+        self.sumPeopleInTheElevator += peopleInElevator*(t-self.oldTime[nrElevator])
+        self.oldTime[nrElevator] = t
+        
     def getMeanOfPeopleInTheElevator(self):
-        return self.sumPeopleInTheElevator / self.totalTime 
+        return self.sumPeopleInTheElevator / (self.totalTime * self.numbersOfAllElevators) 
 
     def getProbabilityNoEntery(self):
         return self.noEnteryLimitOfTheElevator / self.allPeople

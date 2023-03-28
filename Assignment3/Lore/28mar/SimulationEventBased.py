@@ -32,7 +32,7 @@ class Simulation:
     def simulate(self, T):
         # initialize simulation
         fes = FES()
-        res = Results()
+        res = Results(self.nrElevators)
         queueFloor = [deque() for floor in range(Elevator.FLOORS)] # makes a queue for each floor
         queueElevator = [deque() for elev in range(self.nrElevators)]  # makes a queue for each elevator 
         firstCustomerArrivalTime = T
@@ -48,7 +48,7 @@ class Simulation:
         for elevator_i in arange(self.nrElevators):
             elevatorEvent = Event(Event.ELEVATOR_STOPS, firstCustomerArrivalTime, floor = 0, elevatorNr = elevator_i)
             fes.add(elevatorEvent)
-            elevatorList.append(Elevator(firstCustomerArrivalTime, elevator_i, 0))
+            elevatorList.append(Elevator(firstCustomerArrivalTime, self.nrElevators , elevator_i, 0))
         
         t = 0
 
@@ -57,14 +57,13 @@ class Simulation:
             t = e.time
 
             if e.type == Event.ELEVATOR_STOPS:
-                print(e)
+                #print(e)
                 elevator_i = elevatorList[e.elevatorNr]
-                
                 if len(queueElevator[e.elevatorNr]) > 0 or len(queueFloor[elevator_i.floornumber]) > 0: 
                     removeCustomers = Elevator.checkLeaving(elevatorList[e.elevatorNr], queueElevator[e.elevatorNr])
                     addCustomers = Elevator.checkEntering(elevatorList[e.elevatorNr], queueFloor[elevatorList[e.elevatorNr].floornumber]) 
-                    print("     ",len(queueElevator[e.elevatorNr]), "customers in elevator", e.elevatorNr,"           ",len(removeCustomers), "customers should be removed from the elevator at floor",elevator_i.floornumber) 
-                    print("     ",len(queueFloor[elevator_i.floornumber]), "customers in queue at floor",elevator_i.floornumber,"     ",len(addCustomers), "customers should be added to the elevator at floor",elevator_i.floornumber)     
+                    #print("     ",len(queueElevator[e.elevatorNr]), "customers in elevator", e.elevatorNr,"           ",len(removeCustomers), "customers should be removed from the elevator at floor",elevator_i.floornumber) 
+                    #print("     ",len(queueFloor[elevator_i.floornumber]), "customers in queue at floor",elevator_i.floornumber,"     ",len(addCustomers), "customers should be added to the elevator at floor",elevator_i.floornumber)     
                     if len(removeCustomers) > 0 or len(addCustomers) > 0:
                         OpenDoors = Event(Event.ELEVATOR_OPEN_DOORS, t, elevatorNr = e.elevatorNr)
                         fes.add(OpenDoors)
@@ -79,7 +78,7 @@ class Simulation:
                 
             if e.type == Event.ELEVATOR_OPEN_DOORS:
                 t += self.doorDist.rvs()
-                print(e,", doors are fully opened at time", t)
+                #print(e,", doors are fully opened at time", t)
                 removeCustomers = Elevator.checkLeaving(elevatorList[e.elevatorNr], queueElevator[e.elevatorNr])
                 if len(removeCustomers) > 0:
                     FirstCustomerLeaves = Event(Event.CUSTOMER_LEAVE, t, customer = removeCustomers[0], elevatorNr = e.elevatorNr)
@@ -94,9 +93,10 @@ class Simulation:
                         fes.add(CloseDoors)
 
             if e.type == Event.CUSTOMER_LEAVE:
-                print("     ",e)
+                #print("     ",e)
                 t += Customer.MOVETIME
                 queueElevator[e.elevatorNr].remove(e.customer)
+                res.registerPeopleInElevator(t, len(queueElevator[e.elevatorNr]), e.elevatorNr)
                 removeCustomers = Elevator.checkLeaving(elevatorList[e.elevatorNr], queueElevator[e.elevatorNr])
                 if len(removeCustomers) > 0:
                     CustomerLeaves = Event(Event.CUSTOMER_LEAVE, t, customer = removeCustomers[0], elevatorNr = e.elevatorNr)
@@ -112,11 +112,12 @@ class Simulation:
 
             if e.type == Event.CUSTOMER_ENTER:
                 if e.customer in queueFloor[elevatorList[e.elevatorNr].floornumber]:
-                    print("     ",e)
-                    res.sumWaitingTime += t - e.customer.arrivalTime
+                    #print("     ",e)
+                    res.sumWaitingTime[elevatorList[e.elevatorNr].floornumber] += t - e.customer.arrivalTime
                     t += Customer.MOVETIME
                     queueFloor[elevatorList[e.elevatorNr].floornumber].remove(e.customer)
                     queueElevator[e.elevatorNr].append(e.customer)
+                    res.registerPeopleInElevator(t, len(queueElevator[e.elevatorNr]), e.elevatorNr)
                 addCustomers = Elevator.checkEntering(elevatorList[e.elevatorNr], queueFloor[elevatorList[e.elevatorNr].floornumber])
                 if len(addCustomers) > 0 and len(queueElevator[e.elevatorNr]) < Elevator.MAXPEOPLE:
                     FirstCustomerEnters = Event(Event.CUSTOMER_ENTER, t, customer = addCustomers[0], elevatorNr = e.elevatorNr)
@@ -126,14 +127,14 @@ class Simulation:
                     fes.add(CloseDoors)
 
             if e.type == Event.ELEVATOR_CLOSE_DOORS:
-                print(e)
+                #print(e)
                 t += self.doorDist.rvs()
                 Elevator.newFloor(elevatorList[e.elevatorNr])
                 NextFloor = Event(Event.ELEVATOR_STOPS, t + Elevator.MOVETIME, elevatorNr=e.elevatorNr, floor = elevator_i.floornumber)
                 fes.add(NextFloor)
 
             if e.type == Event.CUSTOMER_ARRIVAL: # arrival of a customer
-                res.allPeople += 1
+                res.allPeople[e.floor] += 1
                 des = random.choices(range(Elevator.FLOORS), weights = probFloor[e.floor], k = 1)[0] 
                 c = Customer(t, des, e.floor,res.allPeople)
                 queueFloor[e.floor].append(c)                
@@ -144,15 +145,16 @@ class Simulation:
                 InterArrivalTime = self.arrDist[e.floor].rvs() 
                 nextCustomer = Event(Event.CUSTOMER_ARRIVAL, t+InterArrivalTime, floor = e.floor)
                 fes.add(nextCustomer)
-                print("          ","\033[95m{}\033[0m".format(c))  
+                #print("          ","\033[95m{}\033[0m".format(c))  
 
             if e.type == Event.CUSTOMER_IMPATIENT:
                 if e.customer in queueFloor[e.floor]:
                     queueFloor[e.floor].remove(e.customer)
-                    print("          ","\033[94m{}\033[0m".format(e))
+                    #print("          ","\033[94m{}\033[0m".format(e))
 
 
         res.totalTime = t 
+        return res 
            
 
 probFloor = array([[0, 0.1, 0.3, 0.4, 0.2],
@@ -177,30 +179,29 @@ arrDist1Q5 = Distribution(stats.expon(scale = 60/(3.4*0.3)))
 arrDist2Q5 = Distribution(stats.expon(scale = 60/(2.1*0.2)))
 arrDistQ5 = [arrDist0, arrDist1, arrDist2, arrDist2, arrDist3, arrDist4]
 
-nrElevators = 3 # amount of elevators, vary this number
+nrElevators = 1 # amount of elevators, vary this number
 
 impatienceDown = [0, 10, 20, 40, 60] # seconds before customer takes stairs for amount of floors downstairs
 impatienceUp = [0, 30, 60, 100, 150] # seconds before customer takes stairs for amount of floors upstairs
 
-# sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
+sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 # sim = Simulation(arrDistQ5, doorDist, nrElevators, probFloorQ5) # for question 5
-sim = Simulation(arrDist, doorDist, nrElevators, probFloor ,impatienceDown, impatienceUp, question6=True) # for question 6
+# sim = Simulation(arrDist, doorDist, nrElevators, probFloor ,impatienceDown, impatienceUp, question6=True) # for question 6
 
 
 
 sim.simulate(100)
 
 # for the simulation: 
-nrRuns = 5
+nrRuns = 2
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = zeros(nrRuns)
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))
 
 for i in range(nrRuns): 
     start = time.time()
-    results  = sim.simulate(100)
+    results  = sim.simulate(10_000)
     end = time.time()
-    #print(results.getMeanWaitingTime())
     print("time: ",end-start)
     WaitingTime[i] = results.getMeanWaitingTime()
     PeopleInTheElevator[i] = results.getMeanOfPeopleInTheElevator()

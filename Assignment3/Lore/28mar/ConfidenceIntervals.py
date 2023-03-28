@@ -1,5 +1,5 @@
 import time
-from numpy import mean, var, sqrt, array, shape 
+from numpy import mean, var, sqrt, array, zeros
 from Elevator import Elevator 
 
 class ConfidenceIntervals: 
@@ -11,7 +11,7 @@ class ConfidenceIntervals:
         self.nrRuns = nrRuns
 
     def getCIWaitingTime(self):
-        confidenceIntervals = [[0,0]] * Elevator.FLOORS
+        confidenceIntervals = zeros(Elevator.FLOORS*2).reshape((Elevator.FLOORS,2)) 
         means = [0] * Elevator.FLOORS
         for i in range(Elevator.FLOORS): 
             waitingTimeFloor = array(self.WaitingTime)[:,i]
@@ -27,7 +27,7 @@ class ConfidenceIntervals:
         return [lb, means, ub]
     
     def getCIProbabilityNoEntery(self):
-        confidenceIntervals = [[0,0]]* Elevator.FLOORS
+        confidenceIntervals = zeros(Elevator.FLOORS*2).reshape((Elevator.FLOORS,2))
         means = [0] * Elevator.FLOORS
         for i in range(Elevator.FLOORS): 
             noEntry = array(self.noEnteryLimitOfTheElevator)[:,i]
@@ -37,20 +37,19 @@ class ConfidenceIntervals:
         return confidenceIntervals, means
 
     def __str__(self):
-        print(str(self.getCIPeopleInTheElevator()))
-        print(str(self.getCIWaitingTime()[0][0][0]))
-        print(str(self.getCIWaitingTime()[1][0]))
+        cIWaitingTime = self.getCIWaitingTime()
+        cIProbabilityNoEntry = self.getCIProbabilityNoEntery()
         return ("Confidence Intervalls of the mean waiting time: " + "\n" + 
-                "Floor 1: " + "[ " + str(round(self.getCIWaitingTime()[0][0][0],4)) + " , " + str(round(self.getCIWaitingTime()[1][0],4)) + " , " + str(round(self.getCIWaitingTime()[0][0][1],4)) + " ]"  + "\n" + 
-                "Floor 2: " + "[ " + str(round(self.getCIWaitingTime()[0][1][0],4)) + " , " + str(round(self.getCIWaitingTime()[1][1],4)) + " , " + str(round(self.getCIWaitingTime()[0][1][1],4)) + " ]" + "\n" +
-                "Floor 3: " + "[ " + str(round(self.getCIWaitingTime()[0][2][0],4)) + " , " + str(round(self.getCIWaitingTime()[1][2],4)) + " , " + str(round(self.getCIWaitingTime()[0][2][1],4)) + " ]" + "\n" +
-                "Floor 4: " + "[ " + str(round(self.getCIWaitingTime()[0][3][0],4)) + " , " + str(round(self.getCIWaitingTime()[1][3],4)) + " , " + str(round(self.getCIWaitingTime()[0][3][1],4)) + " ]" + "\n" +
-                "Floor 5: " + "[ " + str(round(self.getCIWaitingTime()[0][4][0],4)) + " , " + str(round(self.getCIWaitingTime()[1][4],4)) + " , " + str(round(self.getCIWaitingTime()[0][4][1],4)) + " ]" + "\n" +
+                "Floor 1: " + "[ " + str(round(cIWaitingTime[0][0][0],4)) + " , " + str(round(cIWaitingTime[1][0],4)) + " , " + str(round(cIWaitingTime[0][0][1],4)) + " ]"  + "\n" + 
+                "Floor 2: " + "[ " + str(round(cIWaitingTime[0][1][0],4)) + " , " + str(round(cIWaitingTime[1][1],4)) + " , " + str(round(cIWaitingTime[0][1][1],4)) + " ]" + "\n" +
+                "Floor 3: " + "[ " + str(round(cIWaitingTime[0][2][0],4)) + " , " + str(round(cIWaitingTime[1][2],4)) + " , " + str(round(cIWaitingTime[0][2][1],4)) + " ]" + "\n" +
+                "Floor 4: " + "[ " + str(round(cIWaitingTime[0][3][0],4)) + " , " + str(round(cIWaitingTime[1][3],4)) + " , " + str(round(cIWaitingTime[0][3][1],4)) + " ]" + "\n" +
+                "Floor 5: " + "[ " + str(round(cIWaitingTime[0][4][0],4)) + " , " + str(round(cIWaitingTime[1][4],4)) + " , " + str(round(cIWaitingTime[0][4][1],4)) + " ]" + "\n" +
                 "Confidence Intervalls of the  number of people in the elevators: " + "[ " + str(round(self.getCIPeopleInTheElevator()[0],4)) + " , " + str(round(self.getCIPeopleInTheElevator()[1],4)) + " ,  " + str(round(self.getCIPeopleInTheElevator()[2],4)) + " ]" + "\n" +
                 "Confidence Intervals pf the probability of no entry because of a full elevator: " + "\n" +
-                "Floor 1: " + "[ " + str(round(self.getCIProbabilityNoEntery()[0][0][0],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[1][0],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[0][0][1],4)) + " ]" + "\n" +
-                "Floor 2: " + "[ " + str(round(self.getCIProbabilityNoEntery()[0][1][0],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[1][1],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[0][1][1],4)) + " ]" + "\n" +
-                "Floor 3: " + "[ " + str(round(self.getCIProbabilityNoEntery()[0][2][0],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[1][2],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[0][2][1],4)) + " ]" + "\n" +
-                "Floor 4: " + "[ " + str(round(self.getCIProbabilityNoEntery()[0][3][0],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[1][3],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[0][3][1],4)) + " ]" + "\n" +
-                "Floor 5: " + "[ " + str(round(self.getCIProbabilityNoEntery()[0][4][0],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[1][4],4)) + " , " + str(round(self.getCIProbabilityNoEntery()[0][4][1],4)) + " ]" + "\n" ) 
+                "Floor 1: " + "[ " + str(round(cIProbabilityNoEntry[0][0][0],4)) + " , " + str(round(cIProbabilityNoEntry[1][0],4)) + " , " + str(round(cIProbabilityNoEntry[0][0][1],4)) + " ]" + "\n" +
+                "Floor 2: " + "[ " + str(round(cIProbabilityNoEntry[0][1][0],4)) + " , " + str(round(cIProbabilityNoEntry[1][1],4)) + " , " + str(round(cIProbabilityNoEntry[0][1][1],4)) + " ]" + "\n" +
+                "Floor 3: " + "[ " + str(round(cIProbabilityNoEntry[0][2][0],4)) + " , " + str(round(cIProbabilityNoEntry[1][2],4)) + " , " + str(round(cIProbabilityNoEntry[0][2][1],4)) + " ]" + "\n" +
+                "Floor 4: " + "[ " + str(round(cIProbabilityNoEntry[0][3][0],4)) + " , " + str(round(cIProbabilityNoEntry[1][3],4)) + " , " + str(round(cIProbabilityNoEntry[0][3][1],4)) + " ]" + "\n" +
+                "Floor 5: " + "[ " + str(round(cIProbabilityNoEntry[0][4][0],4)) + " , " + str(round(cIProbabilityNoEntry[1][4],4)) + " , " + str(round(cIProbabilityNoEntry[0][4][1],4)) + " ]" + "\n" ) 
     

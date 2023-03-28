@@ -7,13 +7,14 @@ class Elevator:
     MAXPEOPLE = 10
     FLOORS = 5
 
-    def __init__(self,timeArrAtFloor, elevatorNumber, floornumber=None):
+    def __init__(self,timeArrAtFloor, elevatorNumber, numbersOfAllElevators , floornumber=None):
         self.timeArrAtFloor = timeArrAtFloor ####added arrival time
         self.elevatorNumber = elevatorNumber
         self.floornumber = floornumber #0 # all the elevators start start at the ground floor 
         self.directionUp = True # if moving down than false 
         self.destinationFloor = []
         self.stopElevator = False
+        self.numbersOfAllElevators = numbersOfAllElevators
         
     def newFloor(self):
         """
