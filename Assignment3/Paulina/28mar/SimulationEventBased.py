@@ -197,7 +197,9 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor ,impatienceDown, impa
 
 sim.simulate(100)
 
-""" nrRuns = 5
+""" 
+# for the simulation: 
+nrRuns = 5
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = zeros(nrRuns)
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))
