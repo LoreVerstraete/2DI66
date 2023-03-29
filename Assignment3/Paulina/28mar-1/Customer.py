@@ -27,7 +27,6 @@ class Customer :
             self.directionUp = False
         self.floordiff = abs(startFloor-destinationFloor)
         self.custnr = custnr
-        self.couldntGetInElevator = False 
 
     def impatience(self,impatienceDown, impatienceUp): 
         if self.directionUp:

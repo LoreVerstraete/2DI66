@@ -12,8 +12,9 @@ class Results:
         self.allPeople = zeros(Elevator.FLOORS)   #[0] * Elevator.FLOORS
         self.oldTime = zeros(numbersOfAllElevators)  #[0] * numbersOfAllElevators
         self.numbersOfAllElevators = numbersOfAllElevators
-        self.numberofTimesElevatorIsInNewFloor = 0 
+        self.numberofTimesElevatorIsInNewFloor = zeros(numbersOfAllElevators)
         self.peopleInThisFloor = zeros(Elevator.FLOORS)
+        self.newPeopleInTheElevator = zeros(numbersOfAllElevators)
 
     def getMeanWaitingTime(self):
         return self.sumWaitingTime / self.allPeople

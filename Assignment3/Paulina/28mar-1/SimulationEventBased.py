@@ -123,6 +123,7 @@ class Simulation:
                     t += Customer.MOVETIME
                     queueFloor[elevatorList[e.elevatorNr].floornumber].remove(e.customer)
                     queueElevator[e.elevatorNr].append(e.customer)
+                    res.newPeopleInTheElevator[e.elevatorNr] += 1
                     if t > timeUnitsThatAreDeleted:
                         res.registerPeopleInElevator(t, len(queueElevator[e.elevatorNr]), e.elevatorNr)
                 addCustomers = Elevator.checkEntering(elevatorList[e.elevatorNr], queueFloor[elevatorList[e.elevatorNr].floornumber])
@@ -134,21 +135,20 @@ class Simulation:
                     fes.add(CloseDoors)
 
             if e.type == Event.ELEVATOR_CLOSE_DOORS:
-                #print("h", e.floor)
                 if len(queueFloor[e.floor])>0:
                     floorlist = [ elevatorList[e.elevatorNr].floornumber for i in elevatorList]  
                     if floorlist.count(elevatorList[e.elevatorNr].floornumber) == 1: #checks if there is only one elevator at this floor 
                         if t > timeUnitsThatAreDeleted:
-                            res.noEnteryLimitOfTheElevator[e.floor] += len(queueFloor[e.floor])/res.peopleInThisFloor[e.floor]  
-                            #if 0 < res.peopleInThisFloor[e.floor] - len(queueFloor[e.floor])> Elevator.MAXPEOPLE:
-                            #    print(len(queueFloor[e.floor]), res.peopleInThisFloor[e.floor])
-                            #    print("something it not good!!!")
+                            res.noEnteryLimitOfTheElevator[e.floor] += (len(queueFloor[e.floor]) - res.newPeopleInTheElevator[e.elevatorNr])/len(queueFloor[e.floor]) 
+                            #print("prob: ",res.noEnteryLimitOfTheElevator[e.floor], " floor ", e.floor)
                 t += self.doorDist.rvs()
                 Elevator.newFloor(elevatorList[e.elevatorNr])
                 NextFloor = Event(Event.ELEVATOR_STOPS, t + Elevator.MOVETIME, elevatorNr=e.elevatorNr, floor = elevator_i.floornumber)
                 fes.add(NextFloor)
-                if t> timeUnitsThatAreDeleted:
-                    res.numberofTimesElevatorIsInNewFloor += 1
+                res.newPeopleInTheElevator[e.elevatorNr] = 0 # after a change of floors for this elevator the number of customers that are new in the elevators are set to zero. 
+                if t > timeUnitsThatAreDeleted:
+                    res.numberofTimesElevatorIsInNewFloor[e.elevatorNr] += 1
+                    # print("moved elevators: ", res.numberofTimesElevatorIsInNewFloor)
 
             if e.type == Event.CUSTOMER_ARRIVAL: # arrival of a customer
                 if t> timeUnitsThatAreDeleted:
@@ -207,7 +207,7 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 # sim = Simulation(arrDist, doorDist, nrElevators, probFloor ,impatienceDown, impatienceUp, question6=True) # for question 6
 
 # for the simulation:
-timeUnitsThatAreDeleted = 10000  #20% of the simulation time  
+timeUnitsThatAreDeleted = 10000  #time that is not taken into account for the results   
 nrRuns = 5
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = zeros(nrRuns)
@@ -215,7 +215,7 @@ noEnteryLimitOfTheElevator = list(zeros(nrRuns))
 
 for i in range(nrRuns): 
     start = time.time()
-    results  = sim.simulate(100_000, timeUnitsThatAreDeleted)
+    results  = sim.simulate(10_0000, timeUnitsThatAreDeleted)
     end = time.time()
     print("time: ",end-start)
     WaitingTime[i] = results.getMeanWaitingTime()

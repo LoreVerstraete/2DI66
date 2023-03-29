@@ -1,4 +1,5 @@
 from Customer import Customer
+from numpy import zeros 
 
 class Elevator:
     ''' Describes the elevator processes '''

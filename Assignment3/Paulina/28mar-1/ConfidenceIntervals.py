@@ -31,6 +31,8 @@ class ConfidenceIntervals:
         means = zeros(Elevator.FLOORS) # [0] * Elevator.FLOORS
         for i in range(Elevator.FLOORS): 
             noEntry = array(self.noEnteryLimitOfTheElevator)[:,i]
+            print("no Entry: ", noEntry, "means", mean(noEntry))
+            print(array(self.noEnteryLimitOfTheElevator))
             confidenceIntervals[i][0] = mean(noEntry) - 1.96*sqrt(var(noEntry)/self.nrRuns)
             confidenceIntervals[i][1] = mean(noEntry) + 1.96*sqrt(var(noEntry)/self.nrRuns)
             means[i] = mean(noEntry)
