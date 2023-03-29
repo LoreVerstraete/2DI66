@@ -138,12 +138,11 @@ class Simulation:
                 if len(queueFloor[e.floor])>0:
                     floorlist = [ elevatorList[e.elevatorNr].floornumber for i in elevatorList]  
                     if floorlist.count(elevatorList[e.elevatorNr].floornumber) == 1: #checks if there is only one elevator at this floor 
-                        if t> timeUnitsThatAreDeleted:
-                            res.noEnteryLimitOfTheElevator[e.floor] += len(queueFloor[e.floor])/res.peopleInThisFloor[e.floor]   # ERROR: some customers are counted more than one time! #adds the length of the queue in the floor 
-                            if res.peopleInThisFloor[e.floor] - len(queueFloor[e.floor]) or len(queueFloor[e.floor])/res.peopleInThisFloor[e.floor]  > 1:
-                                print(len(queueFloor[e.floor]), res.peopleInThisFloor[e.floor])
-                                print("something it not good!!!")
-                        # print("difference aka. people that got into the elevator: ",res.peopleInThisFloor[e.floor] - len(queueFloor[e.floor]))
+                        if t > timeUnitsThatAreDeleted:
+                            res.noEnteryLimitOfTheElevator[e.floor] += len(queueFloor[e.floor])/res.peopleInThisFloor[e.floor]  
+                            #if 0 < res.peopleInThisFloor[e.floor] - len(queueFloor[e.floor])> Elevator.MAXPEOPLE:
+                            #    print(len(queueFloor[e.floor]), res.peopleInThisFloor[e.floor])
+                            #    print("something it not good!!!")
                 t += self.doorDist.rvs()
                 Elevator.newFloor(elevatorList[e.elevatorNr])
                 NextFloor = Event(Event.ELEVATOR_STOPS, t + Elevator.MOVETIME, elevatorNr=e.elevatorNr, floor = elevator_i.floornumber)
@@ -207,13 +206,9 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 # sim = Simulation(arrDistQ5, doorDist, nrElevators, probFloorQ5) # for question 5
 # sim = Simulation(arrDist, doorDist, nrElevators, probFloor ,impatienceDown, impatienceUp, question6=True) # for question 6
 
-
-
-#sim.simulate(100)
-
 # for the simulation:
 timeUnitsThatAreDeleted = 10000  #20% of the simulation time  
-nrRuns = 2
+nrRuns = 5
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = zeros(nrRuns)
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))
