@@ -52,6 +52,7 @@ class Simulation:
         
         t = 0
         custnr = 0
+        # res.numbersOfAllElevators = self.nrElevators
         
         while fes.checkNext().time <= T:
             e = fes.next()  # taking first element of the fes list and deleting this event 
@@ -127,12 +128,15 @@ class Simulation:
                     # print("     ",e)
                     if t > timeUnitsThatAreDeleted:
                         res.sumWaitingTime[elevatorList[e.elevatorNr].floornumber] += t - e.customer.arrivalTime
+                        if t - e.customer.arrivalTime > 300:
+                            res.customerLongerThan5 += 1
                     t += Customer.MOVETIME
                     queueFloor[elevatorList[e.elevatorNr].floornumber].remove(e.customer)
                     queueElevator[e.elevatorNr].append(e.customer)
-                    res.newPeopleInTheElevator[e.elevatorNr] += 1
+                    # res.newPeopleInTheElevator[e.elevatorNr] += 1
                     if t > timeUnitsThatAreDeleted:
                         res.registerPeopleInElevator(t, len(queueElevator[e.elevatorNr]), e.elevatorNr)
+                        res.enterCustomer[elevatorList[e.elevatorNr].floornumber] +=1
                 addCustomers = Elevator.checkEntering(elevatorList[e.elevatorNr], queueFloor[elevatorList[e.elevatorNr].floornumber])
                 if len(addCustomers) > 0 and len(queueElevator[e.elevatorNr]) < Elevator.MAXPEOPLE:
                     FirstCustomerEnters = Event(Event.CUSTOMER_ENTER, t, customer = addCustomers[0], elevatorNr = e.elevatorNr, floor = elevatorList[e.elevatorNr].floornumber)
@@ -140,14 +144,21 @@ class Simulation:
                 else:
                     CloseDoors = Event(Event.ELEVATOR_CLOSE_DOORS, t, elevatorNr = e.elevatorNr, floor = elevatorList[e.elevatorNr].floornumber)
                     fes.add(CloseDoors)
-                    if len(addCustomers) > 0:
-                        res.noEnteryLimitOfTheElevator[elevatorList[e.elevatorNr].floornumber] +=1
-                        # print("no entery", res.noEnteryLimitOfTheElevator)
+                    # if len(queueElevator[e.elevatorNr]) < Elevator.MAXPEOPLE:
+                    if t > timeUnitsThatAreDeleted:
+                        if len(addCustomers) > 0:
+                            # res.noEnteryLimitOfTheElevator[elevatorList[e.elevatorNr].floornumber] +=1
+                            # print("no entery", res.noEnteryLimitOfTheElevator)
+                            res.waitedCustomer[elevatorList[e.elevatorNr].floornumber] += len(addCustomers)
+                                       
+            # n results file:
+            #     probwait[floor] = waitedcust[floor] / (enterCustomer[floor]+waitedcut[floor])
 
             if e.type == Event.ELEVATOR_CLOSE_DOORS:
                 # print(e)
                 # print(e.floor)
-                res.numberDoorCloses[e.floor] += 1
+                # if t > timeUnitsThatAreDeleted:
+                #     res.numberDoorCloses[e.floor] += 1
                 # print(res.numberDoorCloses)
                 # print(queueFloor[e.floor])
                 # if len(queueFloor[e.floor])>0:
@@ -219,21 +230,22 @@ arrDist1Q5 = Distribution(stats.expon(scale = 60/(3.4*0.3)))
 arrDist2Q5 = Distribution(stats.expon(scale = 60/(2.1*0.2)))
 arrDistQ5 = [arrDist0, arrDist1, arrDist2, arrDist2, arrDist3, arrDist4]
 
-nrElevators = 1 # amount of elevators, vary this number
+nrElevators = 3# amount of elevators, vary this number
 
-impatienceDown = [0, 10, 20, 40, 60] # seconds before customer takes stairs for amount of floors downstairs
-impatienceUp = [0, 30, 60, 100, 150] # seconds before customer takes stairs for amount of floors upstairs
+impatienceDown = [0, 60, 90, 120, 150] # seconds before customer takes stairs for amount of floors downstairs
+impatienceUp = [0, 90, 180, 240, 300] # seconds before customer takes stairs for amount of floors upstairs
 
 sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 # sim = Simulation(arrDistQ5, doorDist, nrElevators, probFloorQ5) # for question 5
 # sim = Simulation(arrDist, doorDist, nrElevators, probFloor ,impatienceDown, impatienceUp, question6=True) # for question 6
 
 # for the simulation:
-timeUnitsThatAreDeleted = 10000  #time that is not taken into account for the results   
-nrRuns = 5
+timeUnitsThatAreDeleted = 80000  #time that is not taken into account for the results   
+nrRuns = 10
 WaitingTime = list(zeros(nrRuns))
-PeopleInTheElevator = zeros(nrRuns)
+PeopleInTheElevator = list(zeros(nrRuns))
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))
+fraction5 = list(zeros(nrRuns))
 
 for i in range(nrRuns): 
     start = time.time()
@@ -243,11 +255,14 @@ for i in range(nrRuns):
     WaitingTime[i] = results.getMeanWaitingTime()
     PeopleInTheElevator[i] = results.getMeanOfPeopleInTheElevator()
     noEnteryLimitOfTheElevator[i] = results.getProbabilityNoEntery()
+    fraction5[i] = results.fractionLongerThan5()
 
-cI = ConfidenceIntervals(WaitingTime, PeopleInTheElevator, noEnteryLimitOfTheElevator, nrRuns)
+cI = ConfidenceIntervals(WaitingTime, PeopleInTheElevator, noEnteryLimitOfTheElevator, nrRuns, nrElevators)
 # cI = ConfidenceIntervals(WaitingTime, PeopleInTheElevator, 1, nrRuns)
 print("Time units Deleted", 10000)
 print("nrRuns", nrRuns)
 print("nrElevators", nrElevators)
 print(cI)
+print(mean(fraction5))
+
 

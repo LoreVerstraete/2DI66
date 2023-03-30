@@ -6,7 +6,7 @@ class Results:
 
     def __init__(self, numbersOfAllElevators):
         self.sumWaitingTime = zeros(Elevator.FLOORS)
-        self.sumPeopleInTheElevator = 0 
+        self.sumPeopleInTheElevator = zeros(numbersOfAllElevators)
         self.totalTime = 0
         self.noEnteryLimitOfTheElevator = zeros(Elevator.FLOORS)
         self.allPeople = zeros(Elevator.FLOORS)   #[0] * Elevator.FLOORS
@@ -15,28 +15,32 @@ class Results:
         self.numberofTimesElevatorIsInNewFloor = zeros(numbersOfAllElevators)
         self.peopleInThisFloor = zeros(Elevator.FLOORS)
         self.newPeopleInTheElevator = zeros(numbersOfAllElevators)
-        self.numberDoorCloses = zeros(Elevator.FLOORS)
+        # self.numberDoorCloses = zeros(Elevator.FLOORS)
+        self.enterCustomer = zeros(Elevator.FLOORS)
+        self.waitedCustomer = zeros(Elevator.FLOORS)
+        self.customerLongerThan5 = 0
+        # self.numbersOfAllElevators = 0
 
     def getMeanWaitingTime(self):
         return self.sumWaitingTime / self.allPeople
     
     def registerPeopleInElevator(self, t, peopleInElevator, nrElevator):
-        self.sumPeopleInTheElevator += peopleInElevator*(t-self.oldTime[nrElevator])
+        self.sumPeopleInTheElevator[nrElevator] += peopleInElevator*(t-self.oldTime[nrElevator])
         self.oldTime[nrElevator] = t
         
     def getMeanOfPeopleInTheElevator(self):
-        return self.sumPeopleInTheElevator / (self.totalTime * self.numbersOfAllElevators) 
+        print(self.sumPeopleInTheElevator)
+        print(self.totalTime)
+        return self.sumPeopleInTheElevator / (self.totalTime)
 
     def getProbabilityNoEntery(self):
-        #print(self.noEnteryLimitOfTheElevator, self.allPeople)
-        #print("probability: ", self.noEnteryLimitOfTheElevator / self.allPeople)
-        return self.noEnteryLimitOfTheElevator / self.numberDoorCloses
+        return self.waitedCustomer/(self.enterCustomer + self.waitedCustomer)
+    
+    def fractionLongerThan5(self):
+        print(self.allPeople)
+        print(sum(self.allPeople))
+        return self.customerLongerThan5 / sum(self.allPeople)
 
-
-    # def getProbabilityNoEntery(self):
-    #     #print(self.noEnteryLimitOfTheElevator, self.allPeople)
-    #     #print("probability: ", self.noEnteryLimitOfTheElevator / self.allPeople)
-    #     return self.noEnteryLimitOfTheElevator / self.numberofTimesElevatorIsInNewFloor
     
     def __str__(self):
         #st = ("Waiting time ", "people in the elevator ", "probability that a person cann't get into the elevator ")
