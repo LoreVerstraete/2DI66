@@ -22,13 +22,14 @@ class ConfidenceIntervals:
     
     def getCIPeopleInTheElevator(self):
         lb = mean(self.PeopleInTheElevator) - 1.96*sqrt(var(self.PeopleInTheElevator)/self.nrRuns)
-        ub = mean(self.PeopleInTheElevator) +- 1.96*sqrt(var(self.PeopleInTheElevator)/self.nrRuns)
+        ub = mean(self.PeopleInTheElevator) + 1.96*sqrt(var(self.PeopleInTheElevator)/self.nrRuns)
         means = mean(self.PeopleInTheElevator)
         return [lb, means, ub]
     
     def getCIProbabilityNoEntery(self):
         confidenceIntervals = zeros(Elevator.FLOORS*2).reshape((Elevator.FLOORS,2))
         means = zeros(Elevator.FLOORS) # [0] * Elevator.FLOORS
+
         for i in range(Elevator.FLOORS): 
             noEntry = array(self.noEnteryLimitOfTheElevator)[:,i]
             print("no Entry: ", noEntry, "means", mean(noEntry))
