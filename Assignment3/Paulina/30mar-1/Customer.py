@@ -1,23 +1,8 @@
-"""
--	Users:
-    	Attributes:
-        	Arrival time 
-        	waiting time    
-            Time in the elevators 
-        	(leaving time)
-    	Events: 
-        	Arrival 
-        	Waiting     
-            Elevator 
-        	Leaving 
-"""
-
 class Customer :
 
     MOVETIME = 1
 
     def __init__(self, arrival, destinationFloor, startFloor, custnr=None):
-        ''' Customer has the Atributes: arrivalTime, destinationFloor, startFloor, directionUp '''
         self.arrivalTime = arrival
         self.destinationFloor = destinationFloor
         self.startFloor = startFloor 

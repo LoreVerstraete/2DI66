@@ -1,5 +1,4 @@
 import heapq
-from collections import deque
 
 class FES :
     
@@ -21,5 +20,3 @@ class FES :
         for e in sortedEvents :
             s += str(e) + '\n'
         return s
-
-#print(FES())
