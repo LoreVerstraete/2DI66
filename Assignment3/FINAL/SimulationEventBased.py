@@ -50,8 +50,8 @@ class Simulation:
         for elevator_i in arange(self.nrElevators):
             elevatorEvent = Event(Event.ELEVATOR_STOPS, firstCustomerArrivalTime, floor = 0, elevatorNr = elevator_i)
             fes.add(elevatorEvent)
-            elevatorList.append(Elevator(firstCustomerArrivalTime, self.nrElevators , elevator_i, 0))
-        
+            elevatorList.append(Elevator(firstCustomerArrivalTime, self.nrElevators , elevator_i)) 
+                    
         t = 0 # initilise time
         custnr = 0 # initilise the customer number
         
@@ -258,3 +258,4 @@ for i in range(nrRuns):
 
 cI = ConfidenceIntervals(WaitingTime, PeopleInTheElevator, noEnteryLimitOfTheElevator, nrRuns, nrElevators, fraction5)
 
+print(cI)

@@ -1,10 +1,12 @@
 from numpy import mean, var, sqrt, array, zeros, std
 from Elevator import Elevator 
-#from Results import Results
 
 class ConfidenceIntervals: 
 
     def __init__(self, WaitingTime, PeopleInTheElevator, noEnteryLimitOfTheElevator, nrRuns, nrElevators, fraction5):
+        """
+        Initializing the confidence class and defining the attributes.
+        """
         self.WaitingTime = WaitingTime
         self.PeopleInTheElevator = PeopleInTheElevator
         self.noEnteryLimitOfTheElevator = noEnteryLimitOfTheElevator
@@ -14,6 +16,10 @@ class ConfidenceIntervals:
         
 
     def getCIWaitingTime(self):
+        """ 
+        Calculating the confidence intervals for the waiting time.
+        Returns: Confidence Intervals, Mean and standard derivation.  
+        """
         confidenceIntervals = zeros(Elevator.FLOORS*2).reshape((Elevator.FLOORS,2)) 
         means = [0] * Elevator.FLOORS
         standardDerivation = [0] * Elevator.FLOORS
@@ -26,6 +32,10 @@ class ConfidenceIntervals:
         return confidenceIntervals, means, standardDerivation
     
     def getCIPeopleInTheElevator(self):
+        """
+        Calculating the confidence intervals of the mean of people in the elevator.
+        Returns: Confidence Intervals, Mean and standard derivation.  
+        """
         confidenceIntervals = zeros(self.nrElevators*2).reshape((self.nrElevators,2)) 
         means = [0] * self.nrElevators
         standardDerivation = [0] * self.nrElevators
@@ -38,6 +48,10 @@ class ConfidenceIntervals:
         return confidenceIntervals, means, standardDerivation
     
     def getCIProbabilityNoEntery(self):
+        """
+        Calculating the confidence intervals of the probability of not entering the elevator due to capacity limits. 
+        Returns: Confidence Intervals, Mean and standard derivation.  
+        """
         confidenceIntervals = zeros(Elevator.FLOORS*2).reshape((Elevator.FLOORS,2))
         means = zeros(Elevator.FLOORS) 
         standardDerivation = zeros(Elevator.FLOORS) 
@@ -50,6 +64,10 @@ class ConfidenceIntervals:
         return confidenceIntervals, means, standardDerivation
 
     def getCIFractionLongerThan5(self):
+        """
+        Calculating the confidence intervals of the fraction of people waiting longer than 5 minutes. 
+        Returns: Confidence Intervals, Mean and standard derivation.  
+        """
         confidenceIntervals =[0,0]
         confidenceIntervals[0] = mean(self.fraction5) - 1.96*sqrt(var(self.fraction5)/self.nrRuns)
         confidenceIntervals[1] = mean(self.fraction5) + 1.96*sqrt(var(self.fraction5)/self.nrRuns)
@@ -59,6 +77,9 @@ class ConfidenceIntervals:
     
 
     def __str__(self):
+        """
+        Returns string with the calculated confidence intervals, mean and standard deviation.
+        """
         cIWaitingTime = self.getCIWaitingTime()
         cIProbabilityNoEntry = self.getCIProbabilityNoEntery()
         cIProbabilityPeopleInElevator = self.getCIPeopleInTheElevator()
@@ -71,12 +92,12 @@ class ConfidenceIntervals:
         for i in range(Elevator.FLOORS):
             strWaitingTime += ("Floor " + str(i) + ": " +str(round(cIWaitingTime[0][i][0],4)) + " , " + str(round(cIWaitingTime[1][i],4)) + " , " + str(round(cIWaitingTime[0][0][1],4)) + " ] Standard Derivation: " + str(round(cIWaitingTime[2][i],4)) + "\n")
             strProbabilityNoEntry += ("Floor "+ str(i) +": " + "[ " + str(round(cIProbabilityNoEntry[0][0][0],10)) + " , " + str(round(cIProbabilityNoEntry[1][0],10)) + " , " + str(round(cIProbabilityNoEntry[0][0][1],10)) + " ] Standard Derivation: " + str(round(cIProbabilityNoEntry[2][i],4)) + "\n")
-        return ("Confidence Intervalls of the mean waiting time: " + "\n" + 
+        return ("Confidence Intervals of the mean waiting time: " + "\n" + 
                 strWaitingTime +
-                "Confidence Intervalls of the  number of people in the elevators: " + "\n" +
+                "Confidence Intervals of the  number of people in the elevators: " + "\n" +
                 strElevator +
-                "Confidence Intervals pf the probability of no entry because of a full elevator: " + "\n" +
+                "Confidence Intervals of the probability of users not entering due to capacity limitation: " + "\n" +
                 strProbabilityNoEntry + "\n" +
-                "fraction of peolpe that are waiting longer than 5 minutes: " + "\n" +
-                " [ " + str(round(cIfraction5[0][0],4)) + ", " + str(round(cIfraction5[1],4)) + ", " + str(round(cIfraction5[0][1],4)) + " ] Standard Derivation: " + str(round(cIfraction5[2],4)) ) 
+                "Fraction of people are waiting longer than 5 minutes: " + "\n" +
+                "[ " + str(round(cIfraction5[0][0],4)) + ", " + str(round(cIfraction5[1],4)) + ", " + str(round(cIfraction5[0][1],4)) + " ] Standard Derivation: " + str(round(cIfraction5[2],4)) ) 
     

@@ -148,7 +148,6 @@ class Simulation:
                 if t > timeUnitsThatAreDeleted:
                     res.allPeople[e.floor] += 1
                 des = random.choices(range(Elevator.FLOORS), weights = probFloor[e.floor], k = 1)[0] 
-                # c = Customer(t, des, e.floor,res.allPeople)
                 # change line above to:
                 c = Customer(t, des, e.floor,custnr)
                 queueFloor[e.floor].append(c)                
@@ -167,7 +166,7 @@ class Simulation:
                     #print("          ","\033[94m{}\033[0m".format(e))
 
 
-        res.totalTime = t - timeUnitsThatAreDeleted
+        res.totalTime = t #- timeUnitsThatAreDeleted
         return res 
            
 
@@ -205,7 +204,7 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 # sim = Simulation(arrDist, doorDist, nrElevators, probFloor ,impatienceDown, impatienceUp, question6=True) # for question 6
 
 # for the simulation:
-timeUnitsThatAreDeleted = 1000  #time that is not taken into account for the results   
+timeUnitsThatAreDeleted = 5_000  #time that is not taken into account for the results   
 nrRuns = 5
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = list(zeros(nrRuns))
@@ -214,7 +213,7 @@ fraction5 = list(zeros(nrRuns))
 
 for i in range(nrRuns): 
     start = time.time()
-    results  = sim.simulate(10_000, timeUnitsThatAreDeleted)   #10_0000
+    results  = sim.simulate(50_000, timeUnitsThatAreDeleted)   
     end = time.time()
     print("time: ",end-start)
     WaitingTime[i] = results.getMeanWaitingTime()
@@ -227,4 +226,3 @@ print("Time units Deleted", 10000)
 print("nrRuns", nrRuns)
 print("nrElevators", nrElevators)
 print(cI)
-#print(mean(fraction5))
