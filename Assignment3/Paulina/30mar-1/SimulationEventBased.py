@@ -46,7 +46,7 @@ class Simulation:
         for elevator_i in arange(self.nrElevators):
             elevatorEvent = Event(Event.ELEVATOR_STOPS, firstCustomerArrivalTime, floor = 0, elevatorNr = elevator_i)
             fes.add(elevatorEvent)
-            elevatorList.append(Elevator(firstCustomerArrivalTime, self.nrElevators , elevator_i, 0))
+            elevatorList.append(Elevator(firstCustomerArrivalTime, elevator_i, self.nrElevators , 0))
         
         t = 0
         custnr = 0
@@ -193,7 +193,7 @@ arrDist1Q5 = Distribution(stats.expon(scale = 60/(3.4*0.3)))
 arrDist2Q5 = Distribution(stats.expon(scale = 60/(2.1*0.2)))
 arrDistQ5 = [arrDist0, arrDist1, arrDist2, arrDist2, arrDist3, arrDist4]
 
-nrElevators = 3# amount of elevators, vary this number
+nrElevators = 1# amount of elevators, vary this number
 
 impatienceDown = [0, 60, 90, 120, 150] # seconds before customer takes stairs for amount of floors downstairs
 impatienceUp = [0, 90, 180, 240, 300] # seconds before customer takes stairs for amount of floors upstairs
@@ -205,7 +205,7 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 
 # for the simulation:
 timeUnitsThatAreDeleted = 5_000  #time that is not taken into account for the results   
-nrRuns = 5
+nrRuns = 10
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = list(zeros(nrRuns))
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))

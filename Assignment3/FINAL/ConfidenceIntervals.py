@@ -73,7 +73,7 @@ class ConfidenceIntervals:
         confidenceIntervals[1] = mean(self.fraction5) + 1.96*sqrt(var(self.fraction5)/self.nrRuns)
         means = mean(self.fraction5)
         standardDerivative = std(self.fraction5)
-        return confidenceIntervals, means, standardDerivative 
+        return confidenceIntervals, means, standardDerivative
     
 
     def __str__(self):

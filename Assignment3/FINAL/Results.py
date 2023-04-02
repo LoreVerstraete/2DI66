@@ -1,12 +1,12 @@
 from Elevator import Elevator
-from numpy import zeros
+from numpy import zeros, array
 
 class Results:
     ''' 
     Class to calculate the results.
     '''
 
-    def __init__(self, numbersOfAllElevators):
+    def __init__(self, numbersOfAllElevators, timeUnitsDeleted):
         """
         Initializing the results class and defining the attibutes of the class. 
         """
@@ -14,11 +14,13 @@ class Results:
         self.sumPeopleInTheElevator = zeros(numbersOfAllElevators)
         self.totalTime = 0
         self.allPeople = zeros(Elevator.FLOORS)   
-        self.oldTime = zeros(numbersOfAllElevators)  
+        self.oldTime = array([timeUnitsDeleted] *numbersOfAllElevators)
+        timeUnitsDeleted
         self.numbersOfAllElevators = numbersOfAllElevators
         self.enterCustomer = zeros(Elevator.FLOORS)
         self.waitedCustomer = zeros(Elevator.FLOORS)
         self.customerLongerThan5 = 0
+        self.customersEnter = 0 
 
     def getMeanWaitingTime(self):
         """ 
@@ -58,7 +60,7 @@ class Results:
         Dividing the number of users that waited longer than 5 minutes by the number of all users. 
         Returns: fractions of users waiting longer than 5 minutes. 
         """
-        return self.customerLongerThan5 / sum(self.allPeople)
+        return self.customerLongerThan5 / self.customersEnter #sum(self.allPeople)
 
     
     def __str__(self):

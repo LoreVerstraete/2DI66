@@ -197,7 +197,7 @@ arrDist1Q5 = Distribution(stats.expon(scale = 60/(3.4*0.3)))
 arrDist2Q5 = Distribution(stats.expon(scale = 60/(2.1*0.2)))
 arrDistQ5 = [arrDist0, arrDist1, arrDist2, arrDist2, arrDist3, arrDist4]
 
-nrElevators = 3 # amount of elevators, vary this number
+nrElevators = 1 # amount of elevators, vary this number
 
 impatienceDown = [0, 10, 20, 40, 60] # seconds before customer takes stairs for amount of floors downstairs
 impatienceUp = [0, 30, 60, 100, 150] # seconds before customer takes stairs for amount of floors upstairs
@@ -208,7 +208,7 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 
 # for the simulation:
 timeUnitsThatAreDeleted = 10000  #time that is not taken into account for the results   
-nrRuns = 5
+nrRuns = 10
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = zeros(nrRuns)
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))

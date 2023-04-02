@@ -28,7 +28,7 @@ class Simulation:
     def simulate(self, T, timeUnitsThatAreDeleted):
         ''' Perform the simulation '''
         fes = FES()
-        res = Results(self.nrElevators)
+        res = Results(self.nrElevators,timeUnitsThatAreDeleted)
 
         # make a queue for each floor
         queueFloor = [deque() for floor in range(Elevator.FLOORS)] 
@@ -50,7 +50,7 @@ class Simulation:
         for elevator_i in arange(self.nrElevators):
             elevatorEvent = Event(Event.ELEVATOR_STOPS, firstCustomerArrivalTime, floor = 0, elevatorNr = elevator_i)
             fes.add(elevatorEvent)
-            elevatorList.append(Elevator(firstCustomerArrivalTime, self.nrElevators , elevator_i)) 
+            elevatorList.append(Elevator(firstCustomerArrivalTime, elevator_i, self.nrElevators , 0)) 
 
         t = 0 # initilise time
         custnr = 0 # initilise the customer number
@@ -134,8 +134,9 @@ class Simulation:
                     # Register the waiting time after the warmup time
                     if t > timeUnitsThatAreDeleted:
                         res.sumWaitingTime[elevatorList[e.elevatorNr].floornumber] += t - e.customer.arrivalTime
+                        res.customersEnter += 1
                         # Register is the customer waited for longer than 5 minutes (300 secs) after the warmup time
-                        if t - e.customer.arrivalTime > 300:
+                        if (t - e.customer.arrivalTime) > 300:
                             res.customerLongerThan5 += 1
                     # Add the time it takes to let a person enter the elevator
                     t += Customer.MOVETIME
@@ -205,7 +206,7 @@ class Simulation:
         return res 
            
 ''' input for different secarios of the simulation '''
-nrElevators = 1 # amount of elevators, vary this number
+nrElevators = 5 # amount of elevators, vary this number
 
 probFloor = array([[0, 0.1, 0.3, 0.4, 0.2],
              [0.7, 0, 0.1, 0.1, 0.1],
@@ -240,7 +241,7 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 
 ''' input for the results and confidence intervals '''
 timeUnitsThatAreDeleted = 5000  #time that is not taken into account for the results   
-nrRuns = 165
+nrRuns = 235
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = list(zeros(nrRuns))
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))
