@@ -90,8 +90,8 @@ class ConfidenceIntervals:
         strWaitingTime = ""
         strProbabilityNoEntry = ""
         for i in range(Elevator.FLOORS):
-            strWaitingTime += ("Floor " + str(i) + ": [" +str(round(cIWaitingTime[0][i][0],4)) + " , " + str(round(cIWaitingTime[1][i],4)) + " , " + str(round(cIWaitingTime[0][0][1],4)) + " ] Standard Derivation: " + str(round(cIWaitingTime[2][i],4)) + "\n")
-            strProbabilityNoEntry += ("Floor "+ str(i) +": " + "[ " + str(round(cIProbabilityNoEntry[0][0][0],10)) + " , " + str(round(cIProbabilityNoEntry[1][0],10)) + " , " + str(round(cIProbabilityNoEntry[0][0][1],10)) + " ] Standard Derivation: " + str(round(cIProbabilityNoEntry[2][i],4)) + "\n")
+            strWaitingTime += ("Floor " + str(i) + ": [" +str(round(cIWaitingTime[0][i][0],4)) + " , " + str(round(cIWaitingTime[1][i],4)) + " , " + str(round(cIWaitingTime[0][i][1],4)) + " ] Standard Derivation: " + str(round(cIWaitingTime[2][i],4)) + "\n")
+            strProbabilityNoEntry += ("Floor "+ str(i) +": " + "[ " + str(round(cIProbabilityNoEntry[0][i][0],10)) + " , " + str(round(cIProbabilityNoEntry[1][i],10)) + " , " + str(round(cIProbabilityNoEntry[0][i][1],10)) + " ] Standard Derivation: " + str(round(cIProbabilityNoEntry[2][i],4)) + "\n")
         return ("Confidence Intervals of the mean waiting time: " + "\n" + 
                 strWaitingTime +
                 "Confidence Intervals of the  number of people in the elevators: " + "\n" +

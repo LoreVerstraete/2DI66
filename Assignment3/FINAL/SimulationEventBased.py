@@ -51,7 +51,7 @@ class Simulation:
             elevatorEvent = Event(Event.ELEVATOR_STOPS, firstCustomerArrivalTime, floor = 0, elevatorNr = elevator_i)
             fes.add(elevatorEvent)
             elevatorList.append(Elevator(firstCustomerArrivalTime, self.nrElevators , elevator_i)) 
-                    
+
         t = 0 # initilise time
         custnr = 0 # initilise the customer number
         
@@ -205,7 +205,7 @@ class Simulation:
         return res 
            
 ''' input for different secarios of the simulation '''
-nrElevators = 3 # amount of elevators, vary this number
+nrElevators = 1 # amount of elevators, vary this number
 
 probFloor = array([[0, 0.1, 0.3, 0.4, 0.2],
              [0.7, 0, 0.1, 0.1, 0.1],
@@ -239,8 +239,8 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 # sim = Simulation(arrDist, doorDist, nrElevators, probFloor ,impatienceDown, impatienceUp, question6=True) # for question 6
 
 ''' input for the results and confidence intervals '''
-timeUnitsThatAreDeleted = 1000  #time that is not taken into account for the results   
-nrRuns = 5
+timeUnitsThatAreDeleted = 5000  #time that is not taken into account for the results   
+nrRuns = 165
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = list(zeros(nrRuns))
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))
@@ -248,7 +248,7 @@ fraction5 = list(zeros(nrRuns))
 
 for i in range(nrRuns): 
     start = time.time()
-    results  = sim.simulate(10_000, timeUnitsThatAreDeleted) 
+    results  = sim.simulate(50_000, timeUnitsThatAreDeleted) 
     end = time.time()
     print("time: ",end-start)
     WaitingTime[i] = results.getMeanWaitingTime()
