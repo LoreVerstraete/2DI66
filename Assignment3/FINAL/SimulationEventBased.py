@@ -135,6 +135,8 @@ class Simulation:
                     if t > timeUnitsThatAreDeleted:
                         res.sumWaitingTime[elevatorList[e.elevatorNr].floornumber] += t - e.customer.arrivalTime
                         res.customersEnter += 1
+                        # Add one to the all customers at a certain floor after the warmup time
+                        res.allPeople[e.floor] += 1
                         # Register is the customer waited for longer than 5 minutes (300 secs) after the warmup time
                         if (t - e.customer.arrivalTime) > 300:
                             res.customerLongerThan5 += 1
@@ -174,9 +176,7 @@ class Simulation:
             if e.type == Event.CUSTOMER_ARRIVAL: 
                 # Add one to the customer number
                 custnr += 1
-                # Add one to the all customers at a certain floor after the warmup time
-                if t > timeUnitsThatAreDeleted:
-                    res.allPeople[e.floor] += 1
+                
                 # Get the destinationfloor of the customer and append the customer to the queue
                 des = random.choices(range(Elevator.FLOORS), weights = probFloor[e.floor], k = 1)[0] 
                 c = Customer(t, des, e.floor,custnr)
@@ -206,7 +206,7 @@ class Simulation:
         return res 
            
 ''' input for different secarios of the simulation '''
-nrElevators = 5 # amount of elevators, vary this number
+nrElevators = 10 # amount of elevators, vary this number
 
 probFloor = array([[0, 0.1, 0.3, 0.4, 0.2],
              [0.7, 0, 0.1, 0.1, 0.1],
@@ -241,7 +241,7 @@ sim = Simulation(arrDist, doorDist, nrElevators, probFloor)
 
 ''' input for the results and confidence intervals '''
 timeUnitsThatAreDeleted = 5000  #time that is not taken into account for the results   
-nrRuns = 235
+nrRuns = 300
 WaitingTime = list(zeros(nrRuns))
 PeopleInTheElevator = list(zeros(nrRuns))
 noEnteryLimitOfTheElevator = list(zeros(nrRuns))
